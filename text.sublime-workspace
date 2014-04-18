@@ -1,0 +1,1494 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"ed",
+				"edream_id"
+			],
+			[
+				"url",
+				"urlopen  (function)"
+			],
+			[
+				"font",
+				"font-size"
+			],
+			[
+				"ba",
+				"background-color"
+			],
+			[
+				"back",
+				"background-color"
+			],
+			[
+				"seo",
+				"seo_suite"
+			],
+			[
+				"inli",
+				"inline-block"
+			],
+			[
+				"text",
+				"text-align"
+			],
+			[
+				"font-",
+				"font-size"
+			],
+			[
+				"margi",
+				"margin-top"
+			],
+			[
+				"m",
+				"message"
+			],
+			[
+				"do",
+				"domain"
+			],
+			[
+				"as",
+				"askDomain"
+			],
+			[
+				"domain",
+				"domainName"
+			],
+			[
+				"inlin",
+				"inline-block"
+			],
+			[
+				"re",
+				"repeat-x"
+			],
+			[
+				"rgb",
+				"rgba()"
+			],
+			[
+				"paddig",
+				"padding-top"
+			],
+			[
+				"ge",
+				"geoLocation"
+			],
+			[
+				"me",
+				"method"
+			],
+			[
+				"mar",
+				"main-area"
+			],
+			[
+				"te",
+				"text-align"
+			],
+			[
+				"mari",
+				"margin-bottom"
+			],
+			[
+				"mark",
+				"Marker"
+			],
+			[
+				"reu",
+				"result"
+			],
+			[
+				"get",
+				"getJSON"
+			],
+			[
+				"f",
+				"file"
+			],
+			[
+				"text-",
+				"text-decoration"
+			],
+			[
+				"co",
+				"context"
+			],
+			[
+				"Mes",
+				"MessageCode"
+			],
+			[
+				"conte",
+				"content"
+			],
+			[
+				"con",
+				"context"
+			],
+			[
+				"paddi",
+				"padding-top"
+			],
+			[
+				"mess",
+				"messageGlobal"
+			],
+			[
+				"fie",
+				"fields"
+			],
+			[
+				"Phot",
+				"photoDiary"
+			],
+			[
+				"bor",
+				"border"
+			],
+			[
+				"mes",
+				"messages"
+			],
+			[
+				"in",
+				"inPhotos"
+			],
+			[
+				"p",
+				"photo"
+			],
+			[
+				"ma",
+				"max_height"
+			],
+			[
+				"max",
+				"max_width"
+			],
+			[
+				"wi",
+				"width"
+			],
+			[
+				"new_",
+				"new_width"
+			],
+			[
+				"of",
+				"offsett"
+			],
+			[
+				"ar",
+				"array_merge"
+			],
+			[
+				"new",
+				"new_width"
+			],
+			[
+				"up",
+				"updateGalery"
+			],
+			[
+				"has",
+				"hasBin"
+			],
+			[
+				"ser",
+				"service"
+			],
+			[
+				"w",
+				"width"
+			],
+			[
+				"di",
+				"display"
+			],
+			[
+				"dro",
+				"droppable"
+			],
+			[
+				"click",
+				"clickEvent"
+			],
+			[
+				"del",
+				"serviceDel"
+			],
+			[
+				"tr",
+				"trigger"
+			],
+			[
+				"h",
+				"hidden"
+			],
+			[
+				"key",
+				"keyup"
+			],
+			[
+				"for",
+				"formset"
+			],
+			[
+				"a",
+				"args"
+			],
+			[
+				"lo",
+				"login"
+			],
+			[
+				"rg",
+				"rgba()"
+			],
+			[
+				"fr",
+				"friend"
+			],
+			[
+				"frind",
+				"friends"
+			],
+			[
+				"user",
+				"userId"
+			],
+			[
+				"requ",
+				"requestId"
+			],
+			[
+				"rqe",
+				"request"
+			],
+			[
+				"ad",
+				"addFriend"
+			],
+			[
+				"pass",
+				"password"
+			],
+			[
+				"Model",
+				"ModelForm"
+			],
+			[
+				"clic",
+				"clickEvent"
+			],
+			[
+				"da",
+				"dragend"
+			],
+			[
+				"marker",
+				"markerClick"
+			],
+			[
+				"ol",
+				"old_width"
+			],
+			[
+				"old_",
+				"old_width"
+			],
+			[
+				"old",
+				"old_height"
+			],
+			[
+				"im",
+				"image"
+			],
+			[
+				"res",
+				"resizedImage"
+			],
+			[
+				"fo",
+				"focusout"
+			],
+			[
+				"cl",
+				"markerClick"
+			],
+			[
+				"_m",
+				"_markersArray"
+			],
+			[
+				"fi",
+				"fileName"
+			],
+			[
+				"image",
+				"imagefile"
+			],
+			[
+				"d",
+				"draggable"
+			],
+			[
+				"http",
+				"HttpResponse"
+			],
+			[
+				"appen",
+				"appendTo"
+			],
+			[
+				"widget",
+				"widget"
+			],
+			[
+				"c",
+				"callback"
+			],
+			[
+				"app",
+				"appendTo"
+			],
+			[
+				"de",
+				"delMarker"
+			],
+			[
+				"r",
+				"request"
+			],
+			[
+				"set",
+				"setLatLngInfo"
+			],
+			[
+				"contex",
+				"contextGalery"
+			],
+			[
+				"g",
+				"galery"
+			],
+			[
+				"sec",
+				"sectionDisplay"
+			],
+			[
+				"se",
+				"sectionButtons"
+			],
+			[
+				"sect",
+				"sectionUploader"
+			],
+			[
+				"pro",
+				"progressBar"
+			],
+			[
+				"obj",
+				"objects"
+			],
+			[
+				"to",
+				"toggle"
+			],
+			[
+				"tmp",
+				"tmpPhoto"
+			],
+			[
+				"si",
+				"size_dest"
+			],
+			[
+				"size",
+				"size_orig"
+			],
+			[
+				"map",
+				"mapClick"
+			],
+			[
+				"Values",
+				"valuesList"
+			],
+			[
+				"values",
+				"valuesList"
+			],
+			[
+				"fun",
+				"function"
+			],
+			[
+				"time",
+				"timeLine"
+			],
+			[
+				"show",
+				"showCoordinate"
+			],
+			[
+				"cre",
+				"createFirstPolyLine"
+			],
+			[
+				"an",
+				"animationMakers"
+			],
+			[
+				"markes",
+				"markersArray"
+			],
+			[
+				"add",
+				"addingMarkers"
+			],
+			[
+				"my",
+				"myLatlng"
+			],
+			[
+				"la",
+				"LatLng"
+			],
+			[
+				"call",
+				"callback"
+			],
+			[
+				"type",
+				"typeof"
+			],
+			[
+				"opti",
+				"options"
+			],
+			[
+				"op",
+				"options"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "lowCostCrawling/settings.py",
+			"settings":
+			{
+				"buffer_size": 2086,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "coreBundle/models.py",
+			"settings":
+			{
+				"buffer_size": 452,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "coreBundle/crawlers/edreams.py",
+			"settings":
+			{
+				"buffer_size": 437,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "coreBundle/crawlers/html.py",
+			"settings":
+			{
+				"buffer_size": 274,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"command_palette":
+	{
+		"height": 392.0,
+		"selected_items":
+		[
+		],
+		"width": 449.0
+	},
+	"console":
+	{
+		"height": 0.0
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/home/ggarri/Developing/lowCostCrawling/coreBundle/crawlers/edreamsCities.py",
+		"/home/ggarri/.config/sublime-text-2/Packages/SublimeCodeIntel/Default (Linux).sublime-keymap",
+		"/home/ggarri/Developing/lowCostCrawling/coreBundle/migrations/0001_initial.py",
+		"/home/ggarri/Developing/lowCostCrawling/coreBundle/models.py",
+		"/home/ggarri/.config/sublime-text-2/Packages/Default/Preferences.sublime-settings",
+		"/home/ggarri/.config/sublime-text-2/Packages/Default/Default (Linux).sublime-keymap",
+		"/home/ggarri/.config/sublime-text-2/Packages/SublimeCodeIntel/SublimeCodeIntel.sublime-settings",
+		"/home/ggarri/.config/sublime-text-2/Packages/User/Default (Linux).sublime-keymap",
+		"/home/ggarri/.config/sublime-text-2/Packages/User/SublimeCodeIntel.sublime-settings",
+		"/home/ggarri/.config/sublime-text-2/Packages/User/Python (Django).sublime-settings",
+		"/home/ggarri/.config/sublime-text-2/Packages/Djaneiro/Settings/Python (Django).sublime-settings",
+		"/home/ggarri/.config/sublime-text-2/Packages/User/HTML (Django).sublime-settings",
+		"/home/ggarri/.config/sublime-text-2/Packages/Djaneiro/Settings/HTML (Django).sublime-settings",
+		"/home/ggarri/.config/sublime-text-2/Packages/User/Preferences.sublime-settings",
+		"/home/ggarri/Developing/lowCostCrawling/manage.py",
+		"/home/ggarri/Trivago/soap_example/helloworld.wsdl",
+		"/home/ggarri/Trivago/soap_example/simple_client.php",
+		"/home/ggarri/Trivago/soap_example/simple_server.php",
+		"/home/ggarri/Trivago/soap_example/simple_server2.php",
+		"/home/ggarri/Trivago/soap_example/my-service.wsdl",
+		"/home/ggarri/Trivago/soap_example/nusoap_example.php",
+		"/home/ggarri/Trivago/soap_example/index.php",
+		"/home/ggarri/Trivago/soap_example/calculadora.php",
+		"/home/ggarri/Trivago/soap_example/simple_client2.php",
+		"/home/ggarri/Trivago/soap_example/index2.php",
+		"/home/ggarri/Programs/nusoap/nusoap_example.php",
+		"/home/ggarri/Programs/nusoap/helloworl.wsdl",
+		"/home/ggarri/Downloads/Pagina Web/dibujosseries.html",
+		"/home/ggarri/Downloads/Pagina Web/index.html",
+		"/home/ggarri/Downloads/Pagina Web/programas.html",
+		"/home/ggarri/Downloads/Pagina Web/publicidad.html",
+		"/home/ggarri/Trivago/addons/example_chrome/popup.js",
+		"/home/ggarri/Trivago/addons/example_chrome/popup.css",
+		"/home/ggarri/Trivago/addons/example_chrome/popup.html",
+		"/home/ggarri/Trivago/addons/example_chrome/manifest.json",
+		"/home/ggarri/University/5ano/2 Cuatrimestre/PL/Practicas/Practica5/lexico.l",
+		"/home/ggarri/University/5ano/2 Cuatrimestre/PL/Practicas/Practica5/lex.yy.c",
+		"/home/ggarri/University/5ano/2 Cuatrimestre/PL/Practicas/Practica5/y.tab.c",
+		"/home/ggarri/University/5ano/2 Cuatrimestre/PL/Practicas/Practica2/lexico.l",
+		"/home/ggarri/University/5ano/2 Cuatrimestre/PL/Practicas/Practica2/lex.yy.c",
+		"/home/ggarri/University/5ano/2 Cuatrimestre/PL/Practicas/Practica3/main.c",
+		"/home/ggarri/University/5ano/2 Cuatrimestre/PL/Practicas/Practica3/traductor.y",
+		"/home/ggarri/Trivago/addons/example_chrome/bootstrap.min.css",
+		"/home/ggarri/Trivago/seos_active/src/Seo/FrontendBundle/Resources/public/js/plugins/grid/storages/webservice.data_storage.js",
+		"/home/ggarri/Trivago/seos_active/src/Seo/FrontendBundle/Resources/public/js/plugins/grid/jquery.grid.js",
+		"/home/ggarri/Developing/myapps/PhotoDiary/urls.py",
+		"/home/ggarri/Developing/myapps/PhotoDiary/common/UploadProgressCachedHandler.py",
+		"/home/ggarri/Developing/myapps/PhotoDiary/Photos/urls.py",
+		"/home/ggarri/Developing/myapps/PhotoDiary/Photos/uploadProgress.py",
+		"/home/ggarri/Developing/myapps/PhotoDiary/Map/views.py",
+		"/home/ggarri/Developing/myapps/PhotoDiary/templates/common/galery.html",
+		"/home/ggarri/Developing/new-trivago/trivago.html",
+		"/home/ggarri/Developing/new-trivago/index.php",
+		"/home/ggarri/Developing/new-trivago/css/html.css",
+		"/home/ggarri/Developing/myapps/PhotoDiary/media/Galery/css/galery.css",
+		"/home/ggarri/Developing/myapps/PhotoDiary/settings.py",
+		"/home/ggarri/Developing/myapps/PhotoDiary/Users/views.py",
+		"/home/ggarri/Developing/myapps/PhotoDiary/templates/Map/map.html",
+		"/home/ggarri/Developing/myapps/PhotoDiary/templates/index.html",
+		"/home/ggarri/Developing/myapps/PhotoDiary/media/Map/js/map.js",
+		"/home/ggarri/Developing/myapps/PhotoDiary/media/common/js/widget/galery.js",
+		"/home/ggarri/Developing/myapps/PhotoDiary/media/common/js/widget/photos.js",
+		"/home/ggarri/Developing/myapps/PhotoDiary/media/Map/css/map.css",
+		"/home/ggarri/Developing/myapps/PhotoDiary/media/common/css/main.css",
+		"/home/ggarri/Developing/myapps/PhotoDiary/media/common/js/controller/http_request.js",
+		"/home/ggarri/Developing/myapps/PhotoDiary/media/common/js/controller/services.js",
+		"/home/ggarri/Developing/myapps/PhotoDiary/media/common/js/widget/maps.js",
+		"/home/ggarri/Developing/myapps/PhotoDiary/MyPeople/urls.py",
+		"/home/ggarri/Developing/myapps/PhotoDiary/templates/Map/markerInfo.html",
+		"/home/ggarri/Developing/myapps/PhotoDiary/templates/Galery/photoInfo.html",
+		"/home/ggarri/Developing/myapps/PhotoDiary/templates/Galery/galery.html",
+		"/home/ggarri/Developing/myapps/PhotoDiary/Photos/messages.py",
+		"/home/ggarri/Developing/myapps/PhotoDiary/Map/messages.py",
+		"/home/ggarri/Developing/myapps/PhotoDiary/Photos/views.py",
+		"/home/ggarri/Developing/myapps/PhotoDiary/media/Galery/js/galery.js",
+		"/home/ggarri/Developing/myapps/PhotoDiary/Photos/models.py",
+		"/home/ggarri/Developing/myapps/PhotoDiary/media/Galery/js/main.js",
+		"/home/ggarri/Developing/myapps/PhotoDiary/Map/urls.py",
+		"/home/ggarri/Developing/myapps/PhotoDiary/media/common/js/widget/messages.js",
+		"/home/ggarri/Developing/myapps/PhotoDiary/middleware/myOwnOnes.py",
+		"/home/ggarri/Developing/myapps/PhotoDiary/Users/messages.py",
+		"/home/ggarri/Developing/myapps/PhotoDiary/media/MyPeople/js/main.js",
+		"/home/ggarri/Developing/myapps/PhotoDiary/media/common/js/widget/autocomplete.js",
+		"/home/ggarri/Developing/myapps/PhotoDiary/Map/models.py",
+		"/home/ggarri/Developing/myapps/PhotoDiary/media/Map/js/main.js",
+		"/home/ggarri/Developing/myapps/PhotoDiary/templates/Map/main.html",
+		"/home/ggarri/Developing/myapps/PhotoDiary/templates/Users/main.html",
+		"/home/ggarri/Developing/myapps/PhotoDiary/media/common/js/helpers.js",
+		"/home/ggarri/Developing/myapps/PhotoDiary/common/messages.py",
+		"/home/ggarri/Developing/myapps/PhotoDiary/media/Users/css/users.css",
+		"/home/ggarri/Developing/myapps/PhotoDiary/templates/Users/register.html",
+		"/home/ggarri/Developing/myapps/PhotoDiary/media/Users/js/users.js",
+		"/home/ggarri/Developing/myapps/PhotoDiary/messages.py",
+		"/home/ggarri/Developing/myapps/PhotoDiary/media/common/js/booter.js",
+		"/home/ggarri/Developing/myapps/PhotoDiary/media/Users/js/users.css",
+		"/home/ggarri/Developing/myapps/PhotoDiary/Users/urls.py",
+		"/home/ggarri/Developing/myapps/PhotoDiary/media/common/js/widget/uploader.js",
+		"/home/ggarri/TID/neositid/www-guser-sp3/components/register/register/personal_data.js",
+		"/home/ggarri/TID/neositid/www-guser-sp3/components/register/view/personal_data.html",
+		"/home/ggarri/TID/neositid/www-guser-sp3/components/register/register/academic_data.js",
+		"/home/ggarri/TID/neositid/www-guser-sp3/components/register/register/residence.js",
+		"/home/ggarri/Developing/myapps/PhotoDiary/settings2.py.bck",
+		"/home/ggarri/Developing/myapps/PhotoDiary/media/Galery/css/main.css",
+		"/home/ggarri/Developing/myapps/PhotoDiary/templates/Galery/main.html",
+		"/home/ggarri/Developing/myapps/PhotoDiary/media/Map/css/main.css",
+		"/home/ggarri/Developing/myapps/PhotoDiary/media/Users/css/main.css",
+		"/home/ggarri/Developing/myapps/PhotoDiary/Users/models.py",
+		"/home/ggarri/Developing/myapps/PhotoDiary/media/Users/js/main.js",
+		"/home/ggarri/Developing/myapps/PhotoDiary/media/Map/js/helper.js",
+		"/home/ggarri/Developing/myapps/PhotoDiary/templates/Map/galery.html",
+		"/home/ggarri/Developing/myapps/PhotoDiary/Users/errors.py",
+		"/home/ggarri/Developing/myapps/PhotoDiary/templates/MyPeople/requests.html",
+		"/home/ggarri/Developing/myapps/PhotoDiary/templates/MyPeople/friends.html",
+		"/home/ggarri/Developing/myapps/PhotoDiary/templates/MyPeople/main.html",
+		"/home/ggarri/Developing/myapps/PhotoDiary/MyPeople/views.py",
+		"/home/ggarri/Developing/myapps/PhotoDiary/templates/Galery/photo_form.html",
+		"/home/ggarri/Developing/myapps/PhotoDiary/media/MyPeople/css/main.css",
+		"/home/ggarri/Developing/myapps/PhotoDiary/templates/Users/form.html",
+		"/home/ggarri/Developing/myapps/PhotoDiary/media/common/middleware/myOwnOne.py",
+		"/home/ggarri/Developing/myapps/PhotoDiary/media/common/middleware/__init__.py",
+		"/home/ggarri/Developing/myapps/PhotoDiary/media/common/middleware",
+		"/home/ggarri/Developing/myapps/PhotoDiary/templates/User/main.html",
+		"/home/ggarri/Developing/myapps/PhotoDiary/templates/Map/marker_form.html",
+		"/home/ggarri/Developing/myapps/PhotoDiary/templates/User/form.html",
+		"/home/ggarri/Developing/myapps/PhotoDiary/media/User/js/main.js",
+		"/home/ggarri/Developing/myapps/wikichef/MagicController/views.py",
+		"/home/ggarri/Developing/myapps/wikichef/templates/recipes/addRecipe.html",
+		"/home/ggarri/Developing/myapps/PhotoDiary/media/User/css/main.css"
+	],
+	"find":
+	{
+		"height": 35.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+			"/home/ggarri/Developing/myapps/PhotoDiary",
+			"<open files>"
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": true,
+		"find_history":
+		[
+			"auto_co",
+			"#'",
+			"\n",
+			"offset1",
+			"offset",
+			"toUpdate",
+			"storage",
+			"toUpdate",
+			"bind:",
+			".search",
+			"filter",
+			"popup-column-filter",
+			"filter.js",
+			"bind:",
+			"filter",
+			"console",
+			"bind:",
+			"validate:",
+			"validat",
+			"bind:",
+			".paginator",
+			"invalidate:",
+			"invalidate",
+			"render",
+			"apply",
+			"currentPage",
+			"paginator:",
+			"paginator",
+			"submit",
+			"serviceAdd",
+			"infowindow",
+			"InfoWindow",
+			"infowindow",
+			"unselectMarker",
+			"contextGalery",
+			"delMarker",
+			"height",
+			"hei",
+			"height",
+			"map",
+			"drop-area",
+			".marker-galery",
+			"drop",
+			"_sections",
+			"drop-area",
+			"ss=\"drop-area",
+			"drop",
+			"mapParams",
+			"center",
+			"popover",
+			"debug",
+			"login",
+			"drop",
+			"serviceAdd",
+			"params_callbac",
+			"widget.infowindow",
+			"markerClick",
+			"markerDragend",
+			"markerClick",
+			"au",
+			"auto",
+			"a",
+			"getCoo",
+			"getPho",
+			"setCoo",
+			"project",
+			"project_dir",
+			"messages('display'",
+			"getCoordinateBy",
+			"http",
+			"setCo",
+			"del",
+			"http_",
+			"http",
+			"context",
+			"uploader_form",
+			"Photos.views.",
+			"photoDi",
+			"PhotoDiary",
+			"serviceGet",
+			"http_request2",
+			"/PhotoDiary",
+			"main-menu",
+			"contex",
+			"conte",
+			"con",
+			"26",
+			"#signIn ",
+			"sign_form",
+			"attr",
+			"change",
+			"loadImage",
+			"p",
+			"upload",
+			"ke",
+			"key",
+			"xhr",
+			"url",
+			"100%",
+			"get",
+			"getB",
+			"bound",
+			"serviceAdd",
+			"addTm",
+			"serviceAdd",
+			"ser",
+			"dis",
+			"di",
+			"display",
+			"title",
+			"le",
+			"legen",
+			"click",
+			"clickPhoto",
+			"consol",
+			"consoe",
+			"serviceGe",
+			"galery.htm",
+			"tumbPhoto",
+			"canvas",
+			"tumb",
+			"console",
+			"updateGalery",
+			"allowGalery",
+			"allowDrop",
+			"allowGalery",
+			"serviceGet",
+			"serviceAdd"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"",
+			"messages('show'",
+			"",
+			"http_request",
+			"",
+			"register_form",
+			"photo",
+			"droppableArea",
+			"allowDrop",
+			"insertItemModes",
+			".tmp-galery",
+			".tmp-galery .ui-galery",
+			"../../common/resources",
+			"../../resources",
+			".tmp-galery .ui-galery",
+			"False",
+			"True",
+			"'type'",
+			"MyError",
+			"",
+			"signin",
+			"addMarker",
+			"map",
+			"icons",
+			"markersArray",
+			"{{MEDIA_URL}}common/css",
+			"{{MEDIA_URL}}common/js",
+			"height",
+			"width",
+			"height",
+			"myMap",
+			"Map",
+			"updateGalery",
+			"",
+			"data",
+			"market.fields.",
+			"market.fields",
+			"lng",
+			"lat",
+			"toggle",
+			"section",
+			"obj",
+			"TEMPLATE_DIR",
+			"TEMPLATE_ROOT",
+			"section",
+			"../images/",
+			"Francia",
+			"Suecia",
+			"Marruecos",
+			"Estocolmo",
+			"Estonia",
+			"Berlin",
+			"Portugal",
+			"Londres",
+			"Eslovaquia",
+			"Austria",
+			"Irlanda",
+			"Corazon",
+			"Oslo",
+			"addingZoomPolygon",
+			""
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 1,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "lowCostCrawling/settings.py",
+					"settings":
+					{
+						"buffer_size": 2086,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								426,
+								426
+							]
+						],
+						"settings":
+						{
+							"codeintel": true,
+							"codeintel_config":
+							{
+								"JavaScript":
+								{
+									"codeintel_max_recursive_dir_depth": 2,
+									"codeintel_scan_files_in_project": false,
+									"javascriptExtraPaths":
+									[
+									]
+								},
+								"PHP":
+								{
+									"codeintel_max_recursive_dir_depth": 5,
+									"codeintel_scan_files_in_project": false,
+									"phpExtraPaths":
+									[
+									]
+								},
+								"Python":
+								{
+									"env":
+									{
+										"PATH": "/usr/bin",
+										"PYTHONPATH": "/usr/lib/python3.3/site-packages"
+									}
+								}
+							},
+							"codeintel_enabled_languages":
+							[
+								"JavaScript",
+								"Mason",
+								"XBL",
+								"XUL",
+								"RHTML",
+								"SCSS",
+								"Python",
+								"HTML",
+								"Ruby",
+								"Python3",
+								"XML",
+								"Sass",
+								"XSLT",
+								"Django",
+								"HTML5",
+								"Perl",
+								"CSS",
+								"Twig",
+								"Less",
+								"Smarty",
+								"Node.js",
+								"Tcl",
+								"TemplateToolkit",
+								"PHP"
+							],
+							"codeintel_live": true,
+							"codeintel_live_enabled_languages":
+							[
+								"JavaScript",
+								"Mason",
+								"XBL",
+								"XUL",
+								"RHTML",
+								"SCSS",
+								"Python",
+								"HTML",
+								"Ruby",
+								"Python3",
+								"XML",
+								"Sass",
+								"XSLT",
+								"Django",
+								"HTML5",
+								"Perl",
+								"CSS",
+								"Twig",
+								"Less",
+								"Smarty",
+								"Node.js",
+								"Tcl",
+								"TemplateToolkit",
+								"PHP"
+							],
+							"codeintel_max_recursive_dir_depth": 10,
+							"codeintel_scan_exclude_dir":
+							{
+								"JavaScript":
+								[
+									"/build/",
+									"/min/"
+								]
+							},
+							"codeintel_scan_files_in_project": true,
+							"codeintel_selected_catalogs":
+							[
+								"PyWin32",
+								"jQuery",
+								"Rails"
+							],
+							"codeintel_snippets": true,
+							"codeintel_syntax_map":
+							{
+								"Python Django": "Python"
+							},
+							"codeintel_tooltips": "popup",
+							"sublime_auto_complete": true,
+							"syntax": "Packages/Python/Python.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 147.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "coreBundle/models.py",
+					"settings":
+					{
+						"buffer_size": 452,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								449,
+								449
+							]
+						],
+						"settings":
+						{
+							"codeintel": true,
+							"codeintel_config":
+							{
+								"JavaScript":
+								{
+									"codeintel_max_recursive_dir_depth": 2,
+									"codeintel_scan_files_in_project": false,
+									"javascriptExtraPaths":
+									[
+									]
+								},
+								"PHP":
+								{
+									"codeintel_max_recursive_dir_depth": 5,
+									"codeintel_scan_files_in_project": false,
+									"phpExtraPaths":
+									[
+									]
+								},
+								"Python":
+								{
+									"env":
+									{
+										"PATH": "/usr/bin",
+										"PYTHONPATH": "/usr/lib/python3.3/site-packages"
+									}
+								}
+							},
+							"codeintel_enabled_languages":
+							[
+								"JavaScript",
+								"Mason",
+								"XBL",
+								"XUL",
+								"RHTML",
+								"SCSS",
+								"Python",
+								"HTML",
+								"Ruby",
+								"Python3",
+								"XML",
+								"Sass",
+								"XSLT",
+								"Django",
+								"HTML5",
+								"Perl",
+								"CSS",
+								"Twig",
+								"Less",
+								"Smarty",
+								"Node.js",
+								"Tcl",
+								"TemplateToolkit",
+								"PHP"
+							],
+							"codeintel_live": true,
+							"codeintel_live_enabled_languages":
+							[
+								"JavaScript",
+								"Mason",
+								"XBL",
+								"XUL",
+								"RHTML",
+								"SCSS",
+								"Python",
+								"HTML",
+								"Ruby",
+								"Python3",
+								"XML",
+								"Sass",
+								"XSLT",
+								"Django",
+								"HTML5",
+								"Perl",
+								"CSS",
+								"Twig",
+								"Less",
+								"Smarty",
+								"Node.js",
+								"Tcl",
+								"TemplateToolkit",
+								"PHP"
+							],
+							"codeintel_max_recursive_dir_depth": 10,
+							"codeintel_scan_exclude_dir":
+							{
+								"JavaScript":
+								[
+									"/build/",
+									"/min/"
+								]
+							},
+							"codeintel_scan_files_in_project": true,
+							"codeintel_selected_catalogs":
+							[
+								"PyWin32",
+								"jQuery",
+								"Rails"
+							],
+							"codeintel_snippets": true,
+							"codeintel_syntax_map":
+							{
+								"Python Django": "Python"
+							},
+							"codeintel_tooltips": "popup",
+							"sublime_auto_complete": true,
+							"syntax": "Packages/Syntaxes/Python Django.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "coreBundle/crawlers/edreams.py",
+					"settings":
+					{
+						"buffer_size": 437,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								349,
+								349
+							]
+						],
+						"settings":
+						{
+							"codeintel": true,
+							"codeintel_config":
+							{
+								"JavaScript":
+								{
+									"codeintel_max_recursive_dir_depth": 2,
+									"codeintel_scan_files_in_project": false,
+									"javascriptExtraPaths":
+									[
+									]
+								},
+								"PHP":
+								{
+									"codeintel_max_recursive_dir_depth": 5,
+									"codeintel_scan_files_in_project": false,
+									"phpExtraPaths":
+									[
+									]
+								},
+								"Python":
+								{
+									"env":
+									{
+										"PATH": "/usr/bin",
+										"PYTHONPATH": "/usr/lib/python3.3/site-packages"
+									}
+								}
+							},
+							"codeintel_enabled_languages":
+							[
+								"JavaScript",
+								"Mason",
+								"XBL",
+								"XUL",
+								"RHTML",
+								"SCSS",
+								"Python",
+								"HTML",
+								"Ruby",
+								"Python3",
+								"XML",
+								"Sass",
+								"XSLT",
+								"Django",
+								"HTML5",
+								"Perl",
+								"CSS",
+								"Twig",
+								"Less",
+								"Smarty",
+								"Node.js",
+								"Tcl",
+								"TemplateToolkit",
+								"PHP"
+							],
+							"codeintel_live": true,
+							"codeintel_live_enabled_languages":
+							[
+								"JavaScript",
+								"Mason",
+								"XBL",
+								"XUL",
+								"RHTML",
+								"SCSS",
+								"Python",
+								"HTML",
+								"Ruby",
+								"Python3",
+								"XML",
+								"Sass",
+								"XSLT",
+								"Django",
+								"HTML5",
+								"Perl",
+								"CSS",
+								"Twig",
+								"Less",
+								"Smarty",
+								"Node.js",
+								"Tcl",
+								"TemplateToolkit",
+								"PHP"
+							],
+							"codeintel_max_recursive_dir_depth": 10,
+							"codeintel_scan_exclude_dir":
+							{
+								"JavaScript":
+								[
+									"/build/",
+									"/min/"
+								]
+							},
+							"codeintel_scan_files_in_project": true,
+							"codeintel_selected_catalogs":
+							[
+								"PyWin32",
+								"jQuery",
+								"Rails"
+							],
+							"codeintel_snippets": true,
+							"codeintel_syntax_map":
+							{
+								"Python Django": "Python"
+							},
+							"codeintel_tooltips": "popup",
+							"sublime_auto_complete": true,
+							"syntax": "Packages/Syntaxes/Python Django.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "coreBundle/crawlers/html.py",
+					"settings":
+					{
+						"buffer_size": 274,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								204,
+								204
+							]
+						],
+						"settings":
+						{
+							"codeintel": true,
+							"codeintel_config":
+							{
+								"JavaScript":
+								{
+									"codeintel_max_recursive_dir_depth": 2,
+									"codeintel_scan_files_in_project": false,
+									"javascriptExtraPaths":
+									[
+									]
+								},
+								"PHP":
+								{
+									"codeintel_max_recursive_dir_depth": 5,
+									"codeintel_scan_files_in_project": false,
+									"phpExtraPaths":
+									[
+									]
+								},
+								"Python":
+								{
+									"env":
+									{
+										"PATH": "/usr/bin",
+										"PYTHONPATH": "/usr/lib/python3.3/site-packages"
+									}
+								}
+							},
+							"codeintel_enabled_languages":
+							[
+								"JavaScript",
+								"Mason",
+								"XBL",
+								"XUL",
+								"RHTML",
+								"SCSS",
+								"Python",
+								"HTML",
+								"Ruby",
+								"Python3",
+								"XML",
+								"Sass",
+								"XSLT",
+								"Django",
+								"HTML5",
+								"Perl",
+								"CSS",
+								"Twig",
+								"Less",
+								"Smarty",
+								"Node.js",
+								"Tcl",
+								"TemplateToolkit",
+								"PHP"
+							],
+							"codeintel_live": true,
+							"codeintel_live_enabled_languages":
+							[
+								"JavaScript",
+								"Mason",
+								"XBL",
+								"XUL",
+								"RHTML",
+								"SCSS",
+								"Python",
+								"HTML",
+								"Ruby",
+								"Python3",
+								"XML",
+								"Sass",
+								"XSLT",
+								"Django",
+								"HTML5",
+								"Perl",
+								"CSS",
+								"Twig",
+								"Less",
+								"Smarty",
+								"Node.js",
+								"Tcl",
+								"TemplateToolkit",
+								"PHP"
+							],
+							"codeintel_max_recursive_dir_depth": 10,
+							"codeintel_scan_exclude_dir":
+							{
+								"JavaScript":
+								[
+									"/build/",
+									"/min/"
+								]
+							},
+							"codeintel_scan_files_in_project": true,
+							"codeintel_selected_catalogs":
+							[
+								"PyWin32",
+								"jQuery",
+								"Rails"
+							],
+							"codeintel_snippets": true,
+							"codeintel_syntax_map":
+							{
+								"Python Django": "Python"
+							},
+							"codeintel_tooltips": "popup",
+							"sublime_auto_complete": true,
+							"syntax": "Packages/Syntaxes/Python Django.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 34.0
+	},
+	"input":
+	{
+		"height": 0.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 88.0
+	},
+	"replace":
+	{
+		"height": 64.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 148.0,
+	"status_bar_visible": true
+}
