@@ -1,6 +1,40 @@
+# -*- coding: utf-8 -*-
 from html import *
 
-def getEdreamCrawledAiports(countryCode = 'DE'):
+def getEdreamCrawledFlights(departureGeoId, arrivalGeoId, departureCity, arrivalCity, departureDate, arrivalDate):
+    url = 'http://www.edreams.es/engine/ItinerarySearch/search'
+    params = {
+        'departureLocationGeoNodeId': departureGeoId
+        , 'departureLocation': departureCity
+        , 'departureDate': departureDate
+        , 'departureTime': '0000'
+        , 'arrivalLocationGeoNodeId': arrivalGeoId
+        , 'arrivalLocation': arrivalCity
+        , 'returnDate': arrivalDate
+        , 'returnTime': '0000'
+        , 'country': 'ES'
+        , 'language': 'es'
+        , 'numAdults': 1
+        , 'numChilds': 0
+        , 'numInfants': 0
+        , 'searchMainProductTypeName': 'FLIGHT'
+        , 'tripTypeName': 'ROUND_TRIP'
+        # , 'numberOfRooms': 1
+        # , 'buyPath': 1
+        # , 'auxOrBt': 0
+        # , 'applyAllTaxes': 'false'
+        # , 'cabinClassName': ''
+        # , 'filteringCarrier': ''
+        # , 'fake_filteringCarrier': "Todas las compañías"
+        # , 'collectionTypeEstimationNeeded': 'false'
+        # , 'resultsFromSearch': 'true'
+    }
+    html = getHtml2(url, params)
+    return html
+
+
+
+def getEdreamCrawledAiports(countryCode):
 
     url = 'http://www.edreams.es/engine/searchEngines/pickers/locationsPerCountry.jsp'
     params = {'countryCode': countryCode }
