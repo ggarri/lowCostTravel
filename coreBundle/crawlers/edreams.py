@@ -9,8 +9,8 @@ def _extractFlighDataOneWay(html):
     for idx, div in enumerate(soup.find_all('div', class_='singleItineray-content')):
         #Price
         priceDiv = div.find(class_='singleItinerayPrice')
-        priceString = priceDiv.contents[2]+priceDiv.find(class_='decimalPricePart').string
-        price = float(priceString.replace(',','.'))
+        priceString = (priceDiv.contents[2].replace('.',''))+(priceDiv.find(class_='decimalPricePart').string.replace(',','.'))
+        price = float(priceString)
         # Duration
         durationOut = div.find(id='segmentElapsedTime_%d_out0' % (idx)).string
         regexp = "(\d+)h(\d+)'"
@@ -40,7 +40,7 @@ def _extractFlighDataRoundTrip(html):
     for idx, div in enumerate(soup.find_all('div', class_='singleItineray-content')):
         #Price
         priceDiv = div.find(class_='singleItinerayPrice')
-        priceString = priceDiv.contents[2]+priceDiv.find(class_='decimalPricePart').string
+        priceString = (priceDiv.contents[2].replace('.',''))+(priceDiv.find(class_='decimalPricePart').string.replace(',','.'))
         price = float(priceString.replace(',','.'))
         # Duration
         durationIn = div.find(id='segmentElapsedTime_%d_in0' % (idx)).string

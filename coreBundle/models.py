@@ -45,6 +45,24 @@ class Flight(models.Model):
                                   , price = flightData['price'])
             flightObj.save()
 
+    @staticmethod
+    def storeEdreamsFlightBetweenCountries(country_code_in, country_code_out, date_in, date_out = None, only_main = True):
+        countryIn = Country.objects.get(code=country_code_in)
+        countryOut = Country.objects.get(code=country_code_out)
+        airportsIn = Airport.objects.filter(country=countryIn, is_main=only_main)
+        airportsOut = Airport.objects.filter(country=countryOut, is_main=only_main)
+
+        if date_out == None:
+            tripType = 'ONE_WAY'
+        else:
+            tripType = 'ROUND_TRIP'
+
+        for airportIn in airportsIn:
+            for airportOut in airportsOut:
+                Flight.storeEdreamsFlightByCode(airportIn.edreams_geoId, airportOut.edreams_geoId
+                                                 , date_in, date_out, tripType)
+
+
 
 
 class Country(models.Model):
@@ -72,9 +90,10 @@ class Airport(models.Model):
 
     country = models.ForeignKey(Country)
     edreams_geoId = models.IntegerField(unique=True)
-    edreams_code = models.CharField(max_length=3)
+    code = models.CharField(max_length=3)
     city = models.CharField(max_length=100)
     created_at = models.DateTimeField(auto_now=True)
+    is_main = models.BooleanField(default=False)
 
     @staticmethod
     def storeEdreamsCitiesByCountryCode(country_code):
@@ -87,7 +106,7 @@ class Airport(models.Model):
         for dataAirport in dataAirports:
             print dataAirport
             newAiportObj, isNew = Airport.objects.get_or_create(edreams_geoId=dataAirport['geoId'], country=country
-                                                         , edreams_code=dataAirport['code'])
+                                                         , code=dataAirport['code'])
             newAiportObj.city = dataAirport['city']
             newAiportObj.save()
 
