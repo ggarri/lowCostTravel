@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from html import *
 
+import re
+
 def getEdreamCrawledFlights(departureGeoId, arrivalGeoId, departureCity, arrivalCity, departureDate, arrivalDate):
     url = 'http://www.edreams.es/engine/ItinerarySearch/search'
     params = {
@@ -30,7 +32,40 @@ def getEdreamCrawledFlights(departureGeoId, arrivalGeoId, departureCity, arrival
         # , 'resultsFromSearch': 'true'
     }
     html = getHtml2(url, params)
-    return html
+    soup = covertHtml2BeautiSoup(html)
+    flightList = list()
+
+    for idx, div in enumerate(soup.find_all('div', class_='singleItineray-content')):
+        #Price
+        priceDiv = div.find(class_='singleItinerayPrice')
+        priceString = priceDiv.contents[2]+priceDiv.find(class_='decimalPricePart').string
+        price = float(priceString.replace(',','.'))
+        # Duration
+        durationIn = div.find(id='segmentElapsedTime_%d_in0' % (idx)).string
+        durationOut = div.find(id='segmentElapsedTime_%d_out0' % (idx)).string
+        regexp = "(\d+)h(\d+)'"
+        durationInItems = re.findall(regexp, durationIn)
+        durationOutItems = re.findall(regexp, durationOut)
+        durationInString = "%sh%sm" % (durationInItems[0])
+        durationOutString = "%sh%sm" % (durationOutItems[0])
+        # Stops
+        stopIn = div.find(id='segmentStopsOvers_%d_in0' % (idx)).string
+        stopOut = div.find(id='segmentStopsOvers_%d_out0' % (idx)).string
+        regexp = "(\d+)"
+        stopInItems = re.findall(regexp, stopIn)
+        stopOutItems = re.findall(regexp, stopOut)
+        stopInString = int(stopInItems[0])
+        stopOutString = int(stopOutItems[0])
+
+        return {
+          'price': price
+           , 'durationIn': durationInString
+           , 'durationOut': durationOutString
+           , 'stopIn': stopInString
+           , 'stopOut': stopOutString
+        }
+
+    # return html
 
 
 
