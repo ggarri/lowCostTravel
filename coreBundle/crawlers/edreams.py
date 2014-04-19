@@ -3,35 +3,37 @@ from html import *
 
 import re
 
-def getEdreamCrawledFlights(departureGeoId, arrivalGeoId, departureCity, arrivalCity, departureDate, arrivalDate):
-    url = 'http://www.edreams.es/engine/ItinerarySearch/search'
-    params = {
-        'departureLocationGeoNodeId': departureGeoId
-        , 'departureLocation': departureCity
-        , 'departureDate': departureDate
-        , 'departureTime': '0000'
-        , 'arrivalLocationGeoNodeId': arrivalGeoId
-        , 'arrivalLocation': arrivalCity
-        , 'returnDate': arrivalDate
-        , 'returnTime': '0000'
-        , 'country': 'ES'
-        , 'language': 'es'
-        , 'numAdults': 1
-        , 'numChilds': 0
-        , 'numInfants': 0
-        , 'searchMainProductTypeName': 'FLIGHT'
-        , 'tripTypeName': 'ROUND_TRIP'
-        # , 'numberOfRooms': 1
-        # , 'buyPath': 1
-        # , 'auxOrBt': 0
-        # , 'applyAllTaxes': 'false'
-        # , 'cabinClassName': ''
-        # , 'filteringCarrier': ''
-        # , 'fake_filteringCarrier': "Todas las compañías"
-        # , 'collectionTypeEstimationNeeded': 'false'
-        # , 'resultsFromSearch': 'true'
-    }
-    html = getHtml2(url, params)
+def _extractFlighDataOneWay(html):
+    soup = covertHtml2BeautiSoup(html)
+    flightList = list()
+    for idx, div in enumerate(soup.find_all('div', class_='singleItineray-content')):
+        #Price
+        priceDiv = div.find(class_='singleItinerayPrice')
+        priceString = priceDiv.contents[2]+priceDiv.find(class_='decimalPricePart').string
+        price = float(priceString.replace(',','.'))
+        # Duration
+        durationOut = div.find(id='segmentElapsedTime_%d_out0' % (idx)).string
+        regexp = "(\d+)h(\d+)'"
+        durationOutItems = re.findall(regexp, durationOut)
+        durationOutString = "%sh%sm" % (durationOutItems[0])
+        # Stops
+        stopOut = div.find(id='segmentStopsOvers_%d_out0' % (idx)).string
+        regexp = "(\d+)"
+        stopOutItems = re.findall(regexp, stopOut)
+        stopOutString = int(stopOutItems[0])
+
+        flightList.append({
+          'price': price
+           , 'durationOut': durationOutString
+           , 'stopsOut': stopOutString
+           , 'durationIn': None
+           , 'stopsIn': None
+        })
+
+    return flightList
+
+
+def _extractFlighDataRoundTrip(html):
     soup = covertHtml2BeautiSoup(html)
     flightList = list()
 
@@ -57,15 +59,52 @@ def getEdreamCrawledFlights(departureGeoId, arrivalGeoId, departureCity, arrival
         stopInString = int(stopInItems[0])
         stopOutString = int(stopOutItems[0])
 
-        return {
+        flightList.append({
           'price': price
            , 'durationIn': durationInString
            , 'durationOut': durationOutString
-           , 'stopIn': stopInString
-           , 'stopOut': stopOutString
-        }
+           , 'stopsIn': stopInString
+           , 'stopsOut': stopOutString
+        })
 
-    # return html
+    return flightList
+
+def getEdreamCrawledFlights(tripType, departureGeoId, arrivalGeoId, departureCity, arrivalCity, departureDate, arrivalDate):
+    url = 'http://www.edreams.es/engine/ItinerarySearch/search'
+    params = {
+        'departureLocationGeoNodeId': departureGeoId
+        , 'departureLocation': departureCity
+        , 'departureDate': departureDate
+        , 'departureTime': '0000'
+        , 'arrivalLocationGeoNodeId': arrivalGeoId
+        , 'arrivalLocation': arrivalCity
+        , 'returnDate': arrivalDate
+        , 'returnTime': '0000'
+        , 'country': 'ES'
+        , 'language': 'es'
+        , 'numAdults': 1
+        , 'numChilds': 0
+        , 'numInfants': 0
+        , 'searchMainProductTypeName': 'FLIGHT'
+        , 'tripTypeName': tripType
+        # , 'numberOfRooms': 1
+        # , 'buyPath': 1
+        # , 'auxOrBt': 0
+        # , 'applyAllTaxes': 'false'
+        # , 'cabinClassName': ''
+        # , 'filteringCarrier': ''
+        # , 'fake_filteringCarrier': "Todas las compañías"
+        # , 'collectionTypeEstimationNeeded': 'false'
+        # , 'resultsFromSearch': 'true'
+    }
+    html = getHtml2(url, params)
+
+    if tripType == 'ROUND_TRIP':
+        return _extractFlighDataRoundTrip(html)
+    elif tripType == 'ONE_WAY':
+        return _extractFlighDataOneWay(html)
+
+    return list()
 
 
 
