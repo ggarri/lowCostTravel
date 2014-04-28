@@ -1,34 +1,43 @@
 # -*- coding: utf-8 -*-
 from html import *
 
+
 import re
+
+proxy_ip = '127.0.0.1'
+proxy_port = 9050
+proxy_active = True
 
 def _extractFlighDataOneWay(html):
     soup = covertHtml2BeautiSoup(html)
     flightList = list()
     for idx, div in enumerate(soup.find_all('div', class_='singleItineray-content')):
-        #Price
-        priceDiv = div.find(class_='singleItinerayPrice')
-        priceString = (priceDiv.contents[2].replace('.',''))+(priceDiv.find(class_='decimalPricePart').string.replace(',','.'))
-        price = float(priceString)
-        # Duration
-        durationOut = div.find(id='segmentElapsedTime_%d_out0' % (idx)).string
-        regexp = "(\d+)h(\d+)'"
-        durationOutItems = re.findall(regexp, durationOut)
-        durationOutString = "%sh%sm" % (durationOutItems[0])
-        # Stops
-        stopOut = div.find(id='segmentStopsOvers_%d_out0' % (idx)).string
-        regexp = "(\d+)"
-        stopOutItems = re.findall(regexp, stopOut)
-        stopOutString = int(stopOutItems[0])
+        try:
+            #Price
+            priceDiv = div.find(class_='singleItinerayPrice')
+            priceString = (priceDiv.contents[2].replace('.',''))+(priceDiv.find(class_='decimalPricePart').string.replace(',','.'))
+            price = float(priceString)
+            # Duration
+            durationOut = div.find(id='segmentElapsedTime_%d_out0' % (idx)).string
+            regexp = "(\d+)h(\d+)'"
+            durationOutItems = re.findall(regexp, durationOut)
+            durationOutString = "%sh%sm" % (durationOutItems[0])
+            # Stops
+            stopOut = div.find(id='segmentStopsOvers_%d_out0' % (idx)).string
+            regexp = "(\d+)"
+            stopOutItems = re.findall(regexp, stopOut)
+            stopOutString = int(stopOutItems[0])
 
-        flightList.append({
-          'price': price
-           , 'durationOut': durationOutString
-           , 'stopsOut': stopOutString
-           , 'durationIn': None
-           , 'stopsIn': None
-        })
+            flightList.append({
+              'price': price
+               , 'durationOut': durationOutString
+               , 'stopsOut': stopOutString
+               , 'durationIn': None
+               , 'stopsIn': None
+            })
+        except:
+            pass
+
 
     return flightList
 
@@ -97,7 +106,11 @@ def getEdreamCrawledFlights(tripType, departureGeoId, arrivalGeoId, departureCit
         # , 'collectionTypeEstimationNeeded': 'false'
         # , 'resultsFromSearch': 'true'
     }
-    html = getHtml2(url, params)
+
+    if proxy_active == True:
+        html = getHtmlProxy(url, params, proxy_ip, proxy_port)
+    else:
+        html = getHtml2(url, params)
 
     if tripType == 'ROUND_TRIP':
         return _extractFlighDataRoundTrip(html)
@@ -112,7 +125,7 @@ def getEdreamCrawledAiports(countryCode):
 
     url = 'http://www.edreams.es/engine/searchEngines/pickers/locationsPerCountry.jsp'
     params = {'countryCode': countryCode }
-    html = getHtml(url, params)
+    html = getHtml2(url, params)
     soup = covertHtml2BeautiSoup(html)
     cityAiports = list()
     listCode = soup.find(id='countryDestinationsCodesArray').string.split('|')
@@ -143,3 +156,5 @@ def getEdreamCrawledCountries(letter):
             countryCodes.append(codeName)
 
     return countryCodes
+
+

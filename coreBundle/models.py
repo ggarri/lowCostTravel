@@ -13,11 +13,11 @@ class Flight(models.Model):
 
     edreams_geoId_in = models.IntegerField(blank=True, null=True)
     edreams_geoId_out = models.IntegerField(blank=True, null=True)
-    price = models.FloatField()
+    price = models.FloatField(null=True)
     duration_in = models.CharField(max_length=10, blank=True, null=True)
     duration_out = models.CharField(max_length=10)
     stops_in = models.IntegerField(blank=True, null=True)
-    stops_out = models.IntegerField()
+    stops_out = models.IntegerField(null=True)
     trip_type = models.CharField(max_length=10, choices=FLIGHT_MODE)
     date_in = models.DateTimeField()
     date_out = models.DateTimeField(blank=True, null=True)
@@ -38,11 +38,16 @@ class Flight(models.Model):
 
         for flightData in flightsData:
             print flightData
-            flightObj = Flight(edreams_geoId_in = geoIdIn, edreams_geoId_out = geoIdOut, trip_type = tripType,
-                                  duration_in = flightData['durationIn'], date_in = dateInFormated
-                                  , date_out = dateOutFormated, duration_out = flightData['durationOut']
-                                  , stops_in = flightData['stopsIn'], stops_out = flightData['stopsOut']
-                                  , price = flightData['price'])
+            flightObj, isNew = Flight.objects.get_or_create(edreams_geoId_in = geoIdIn, edreams_geoId_out = geoIdOut
+                                                            , trip_type = tripType, date_in = dateInFormated
+                                                            , date_out = dateOutFormated
+            )
+
+            flightObj.duration_in = flightData['durationIn']
+            flightObj.duration_out = flightData['durationOut']
+            flightObj.stops_in = flightData['stopsIn']
+            flightObj.stops_out = flightData['stopsOut']
+            flightObj.price = flightData['price']
             flightObj.save()
 
     @staticmethod
