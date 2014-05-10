@@ -26,7 +26,6 @@ class Flight(models.Model):
     @staticmethod
     def storeEdreamsFlightByCode(geoIdIn, geoIdOut, dateIn , dateOut = None, tripType = 'ONE_WAY'):
         flightsData = getEdreamCrawledFlights(tripType, geoIdIn, geoIdOut, None, None, dateIn, dateOut)
-        getEdreamCrawledFlights('ONE_WAY', '1147','157','','','19/10/2014', '20/10/2014')
         print flightsData
         dateInConv = time.strptime(dateIn, "%d/%m/%Y")
         dateInFormated = time.strftime("%Y-%m-%d",dateInConv)

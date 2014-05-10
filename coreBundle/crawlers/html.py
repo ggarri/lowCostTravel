@@ -24,7 +24,7 @@ def getHtml(url, params):
 def getHtml2(url, params):
     data = urllib.urlencode(params)
     req = urllib2.Request(url)
-    for headType, headValue in eDreamsHeaders :
+    for headType, headValue in eDreamsHeaders.items() :
         req.add_header(headType, headValue)
 
     response = urllib2.urlopen(req, data)
@@ -68,3 +68,10 @@ def getHtmlProxy(url, params, ip = None, port = None):
 def covertHtml2BeautiSoup(html):
 	soup = BeautifulSoup(html)
 	return soup
+
+
+def fileWrite(fileName, text):
+    f = open(fileName, 'w')
+    f.write(text)
+    f.close()
+

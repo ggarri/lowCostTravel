@@ -1,42 +1,40 @@
 # -*- coding: utf-8 -*-
 from html import *
-
-
 import re
 
 proxy_ip = '127.0.0.1'
 proxy_port = 9050
-proxy_active = True
+proxy_active = False
 
 def _extractFlighDataOneWay(html):
     soup = covertHtml2BeautiSoup(html)
     flightList = list()
     for idx, div in enumerate(soup.find_all('div', class_='singleItineray-content')):
+        info = {'durationIn': None, 'stopsIn': None, 'price': None, 'durationOut': None, 'stopsOut': None}
         try:
             #Price
             priceDiv = div.find(class_='singleItinerayPrice')
             priceString = (priceDiv.contents[2].replace('.',''))+(priceDiv.find(class_='decimalPricePart').string.replace(',','.'))
             price = float(priceString)
+            info['price'] = price
+
             # Duration
             durationOut = div.find(id='segmentElapsedTime_%d_out0' % (idx)).string
-            regexp = "(\d+)h(\d+)'"
+            regexp = "(\d+)h(\d+)"
             durationOutItems = re.findall(regexp, durationOut)
             durationOutString = "%sh%sm" % (durationOutItems[0])
+            info['durationOut'] = durationOutString
+
             # Stops
             stopOut = div.find(id='segmentStopsOvers_%d_out0' % (idx)).string
             regexp = "(\d+)"
             stopOutItems = re.findall(regexp, stopOut)
             stopOutString = int(stopOutItems[0])
+            info['stopsOut'] = stopOutString
 
-            flightList.append({
-              'price': price
-               , 'durationOut': durationOutString
-               , 'stopsOut': stopOutString
-               , 'durationIn': None
-               , 'stopsIn': None
-            })
+            flightList.append(info)
         except:
-            pass
+            flightList.append(info)
 
 
     return flightList
@@ -47,34 +45,43 @@ def _extractFlighDataRoundTrip(html):
     flightList = list()
 
     for idx, div in enumerate(soup.find_all('div', class_='singleItineray-content')):
-        #Price
-        priceDiv = div.find(class_='singleItinerayPrice')
-        priceString = (priceDiv.contents[2].replace('.',''))+(priceDiv.find(class_='decimalPricePart').string.replace(',','.'))
-        price = float(priceString.replace(',','.'))
-        # Duration
-        durationIn = div.find(id='segmentElapsedTime_%d_in0' % (idx)).string
-        durationOut = div.find(id='segmentElapsedTime_%d_out0' % (idx)).string
-        regexp = "(\d+)h(\d+)'"
-        durationInItems = re.findall(regexp, durationIn)
-        durationOutItems = re.findall(regexp, durationOut)
-        durationInString = "%sh%sm" % (durationInItems[0])
-        durationOutString = "%sh%sm" % (durationOutItems[0])
-        # Stops
-        stopIn = div.find(id='segmentStopsOvers_%d_in0' % (idx)).string
-        stopOut = div.find(id='segmentStopsOvers_%d_out0' % (idx)).string
-        regexp = "(\d+)"
-        stopInItems = re.findall(regexp, stopIn)
-        stopOutItems = re.findall(regexp, stopOut)
-        stopInString = int(stopInItems[0])
-        stopOutString = int(stopOutItems[0])
-
-        flightList.append({
+        info = {
           'price': price
            , 'durationIn': durationInString
            , 'durationOut': durationOutString
            , 'stopsIn': stopInString
            , 'stopsOut': stopOutString
-        })
+        }
+        try:
+            #Price
+            priceDiv = div.find(class_='singleItinerayPrice')
+            priceString = (priceDiv.contents[2].replace('.',''))+(priceDiv.find(class_='decimalPricePart').string.replace(',','.'))
+            price = float(priceString.replace(',','.'))
+            info['price'] = price
+            # Duration
+            durationIn = div.find(id='segmentElapsedTime_%d_in0' % (idx)).string
+            durationOut = div.find(id='segmentElapsedTime_%d_out0' % (idx)).string
+            regexp = "(\d+)h(\d+)"
+            durationInItems = re.findall(regexp, durationIn)
+            durationOutItems = re.findall(regexp, durationOut)
+            durationInString = "%sh%sm" % (durationInItems[0])
+            durationOutString = "%sh%sm" % (durationOutItems[0])
+            info['durationIn'] = durationInString
+            info['durationOut'] = durationOutString
+            # Stops
+            stopIn = div.find(id='segmentStopsOvers_%d_in0' % (idx)).string
+            stopOut = div.find(id='segmentStopsOvers_%d_out0' % (idx)).string
+            regexp = "(\d+)"
+            stopInItems = re.findall(regexp, stopIn)
+            stopOutItems = re.findall(regexp, stopOut)
+            stopInString = int(stopInItems[0])
+            stopOutString = int(stopOutItems[0])
+            info['stopsIn'] = stopInString
+            info['stopsOut'] = stopOutString
+
+            flightList.append(info)
+        except:
+            flightList.append(info)
 
     return flightList
 
