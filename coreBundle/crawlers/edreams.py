@@ -4,7 +4,7 @@ import re
 
 proxy_ip = '127.0.0.1'
 proxy_port = 9050
-proxy_active = False
+proxy_active = True
 
 def _extractFlighDataOneWay(html):
     soup = covertHtml2BeautiSoup(html)
