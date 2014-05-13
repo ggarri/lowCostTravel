@@ -1,5 +1,6 @@
 from django.db import models
 from crawlers.edreams import *
+from django.db.models import Avg, Max, Min
 
 import itertools
 
@@ -26,7 +27,6 @@ class Flight(models.Model):
     @staticmethod
     def storeEdreamsFlightByCode(geoIdIn, geoIdOut, dateIn , dateOut = None, tripType = 'ONE_WAY'):
         flightsData = getEdreamCrawledFlights(tripType, geoIdIn, geoIdOut, None, None, dateIn, dateOut)
-        print flightsData
         dateInConv = time.strptime(dateIn, "%d/%m/%Y")
         dateInFormated = time.strftime("%Y-%m-%d",dateInConv)
         if dateOut != None:
@@ -35,9 +35,12 @@ class Flight(models.Model):
         else:
             dateOutFormated = None
 
+        Flight.objects.filter(edreams_geoId_in = geoIdIn, edreams_geoId_out = geoIdOut
+                                                            , trip_type = tripType, date_in = dateInFormated
+                                                            , date_out = dateOutFormated).delete()
         for flightData in flightsData:
             print flightData
-            flightObj, isNew = Flight.objects.get_or_create(edreams_geoId_in = geoIdIn, edreams_geoId_out = geoIdOut
+            flightObj = Flight(edreams_geoId_in = geoIdIn, edreams_geoId_out = geoIdOut
                                                             , trip_type = tripType, date_in = dateInFormated
                                                             , date_out = dateOutFormated
             )
@@ -119,5 +122,39 @@ class Airport(models.Model):
         countries = Country.objects.all()
         for country in countries:
                Airport.storeEdreamsCitiesByCountry(country)
+
+    @staticmethod
+    def resetAirportIsMainByCountryCode(country_code):
+        country = Country.objects.get(code=country_code)
+        Airport.objects.filter(country=country).update(is_main=True)
+
+
+    def getCheapConexionAirports(self, country_code_out):
+        countryOut = Country.objects.get(code=country_code_out)
+        allAirport = Airport.objects.filter(country=countryOut, is_main=True)
+        allFlightList = Flight.objects.filter(edreams_geoId_in=self.edreams_geoId
+                                           , edreams_geoId_out__in=allAirport.values_list('edreams_geoId')).exclude(price=None)
+
+        airportWithFlight = set(allFlightList.values_list('edreams_geoId_out', flat=True))
+        flightDateRange = set(allFlightList.values_list('date_in'))
+
+        flightPrices = set(allFlightList.values_list('price', flat=True))
+        if len(flightPrices) == 0:
+            return []
+
+        averagePriceFlights = reduce(lambda x, y: x + y, flightPrices) / len(flightPrices)
+
+        listAirportGeoId = []
+        for aiportCode in airportWithFlight:
+            minPrice = allFlightList.filter(edreams_geoId_out=aiportCode).aggregate(Avg('price'))
+            if minPrice['price__avg'] <  averagePriceFlights:
+                listAirportGeoId.append(aiportCode)
+
+        return Airport.objects.filter(edreams_geoId__in=listAirportGeoId)
+
+
+
+
+
 
 

@@ -29,7 +29,14 @@ class Command(BaseCommand):
         dateTo = datetime.datetime.strptime(_to, "%d/%m/%Y").date()
 
         for dt in rrule(DAILY, dtstart=dateFrom, until=dateTo):
-            Flight.storeEdreamsFlightBetweenCountries(country_code_in = orig
-                                                      , country_code_out = dest
-                                                      , date_in = dt.strftime("%d/%m/%Y")
-            )
+            countryIn = Country.objects.get(code=orig)
+            airportsIn = Airport.objects.filter(country=countryIn)
+            tripType = 'ONE_WAY'
+            dateInFormatted = dt.strftime("%d/%m/%Y")
+
+            for airportIn in airportsIn:
+                airportsOut = airportIn.getCheapConexionAirports(dest)
+                for airportOut in airportsOut:
+                    print "From %s to %s at %s" % (airportIn.code, airportOut.code, dateInFormatted)
+                    Flight.storeEdreamsFlightByCode(airportIn.edreams_geoId, airportOut.edreams_geoId
+                                                     , dateInFormatted, None, tripType)
