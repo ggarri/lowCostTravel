@@ -6,6 +6,10 @@ import itertools
 
 import time
 
+########################################################
+##      FLIGHT ENTITY
+########################################################
+
 class Flight(models.Model):
     FLIGHT_MODE = (
         ('ONE_WAY', 'one way'),
@@ -69,7 +73,19 @@ class Flight(models.Model):
                 Flight.storeEdreamsFlightByCode(airportIn.edreams_geoId, airportOut.edreams_geoId
                                                  , date_in, date_out, tripType)
 
+    @staticmethod
+    def getListCheapestFlight(countryIn, countryOut, dateFrom, dateTo, limit=10):
+        aAirportsIn = Airport.objects.filter(country=countryIn)
+        aAirportsOut = Airport.objects.filter(country=countryOut)
 
+        aFlightsGo = Flight.objects.filter(edreams_geoId_in__in = aAirportsIn.values_list('edreams_geoId', flat=True),
+                              edreams_geoId_out__in = aAirportsOut.values_list('edreams_geoId', flat=True),
+                              ).order_by('price')
+
+        return aFlightsGo
+########################################################
+##      COUNTRY ENTITY
+########################################################
 
 
 class Country(models.Model):
@@ -92,6 +108,9 @@ class Country(models.Model):
             Country.storeEdreamsCountryCodeByLetter(letter)
 
 
+########################################################
+##      AIRPORT ENTITY
+########################################################
 
 class Airport(models.Model):
 
@@ -129,28 +148,44 @@ class Airport(models.Model):
         Airport.objects.filter(country=country).update(is_main=True)
 
 
-    def getCheapConexionAirports(self, country_code_out):
-        countryOut = Country.objects.get(code=country_code_out)
-        allAirport = Airport.objects.filter(country=countryOut, is_main=True)
-        allFlightList = Flight.objects.filter(edreams_geoId_in=self.edreams_geoId
-                                           , edreams_geoId_out__in=allAirport.values_list('edreams_geoId')).exclude(price=None)
+    def getBestConexionAirports(self, country_code_out):
+        oCountryOut = Country.objects.get(code=country_code_out)
+        aAirportOut = Airport.objects.filter(country=oCountryOut, is_main=True)
 
-        airportWithFlight = set(allFlightList.values_list('edreams_geoId_out', flat=True))
-        flightDateRange = set(allFlightList.values_list('date_in'))
+        # Calculate global avarage prices
+        aAllFlights = Flight.objects.filter(edreams_geoId_in=self.edreams_geoId
+                                       , edreams_geoId_out__in=aAirportOut.values_list('edreams_geoId'))
+        aAllFlightPrice = set(aAllFlights.values_list('price', flat=True))
+        aFlightDateRange = set(aAllFlights.values_list('date_in'))
 
-        flightPrices = set(allFlightList.values_list('price', flat=True))
-        if len(flightPrices) == 0:
-            return []
+        if 0 == len(aAllFlightPrice):
+            fGlobalAvaragePrice = None
+        else:
+            fGlobalAvaragePrice = reduce(lambda x, y: x + y, aAllFlightPrice) / len(aAllFlightPrice)
+            print "Global avarage price %f with %d days crawled" % (fGlobalAvaragePrice, len(aFlightDateRange))
 
-        averagePriceFlights = reduce(lambda x, y: x + y, flightPrices) / len(flightPrices)
+        # Get the list of airport which has price lower than global avarage
+        aBestAirportGeoId = []
+        for oAirporOut in aAirportOut:
+            aFlightOutList = Flight.objects.filter(edreams_geoId_in=self.edreams_geoId
+                                       , edreams_geoId_out=oAirporOut.edreams_geoId)
 
-        listAirportGeoId = []
-        for aiportCode in airportWithFlight:
-            minPrice = allFlightList.filter(edreams_geoId_out=aiportCode).aggregate(Avg('price'))
-            if minPrice['price__avg'] <  averagePriceFlights:
-                listAirportGeoId.append(aiportCode)
+            aFlightPrice = set(aFlightOutList.values_list('price', flat=True))
 
-        return Airport.objects.filter(edreams_geoId__in=listAirportGeoId)
+            # It wasn't crawled it, then give it a chance ;)
+            if 0 != len(aFlightPrice):
+                fPriceAirportAvarage = reduce(lambda x, y: x + y, aFlightPrice) / len(aFlightPrice)
+                print "Airport %s avarage price %f" % (oAirporOut.city, fPriceAirportAvarage)
+            else:
+                fPriceAirportAvarage = 9999999999
+                # print "Airport %s doesnt have previous experience" % (oAirporOut.city)
+
+            # If there is not previous experience, or avarage price is lower or there isn't more than 1 day crawled
+            # print fPriceAirportAvarage < fGlobalAvaragePrice, fPriceAirportAvarage, fGlobalAvaragePrice
+            if None == fGlobalAvaragePrice or fPriceAirportAvarage < fGlobalAvaragePrice or len(aFlightDateRange) < 2:
+                aBestAirportGeoId.append(oAirporOut.edreams_geoId)
+
+        return Airport.objects.filter(edreams_geoId__in=aBestAirportGeoId)
 
 
 
