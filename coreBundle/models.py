@@ -1,6 +1,6 @@
 from django.db import models
 from crawlers.edreams import *
-from django.db.models import Avg, Max, Min
+from django.db.models import Avg, Max, Min, Count
 
 import itertools
 
@@ -33,6 +33,7 @@ class Flight(models.Model):
         flightsData = getEdreamCrawledFlights(tripType, geoIdIn, geoIdOut, None, None, dateIn, dateOut)
         dateInConv = time.strptime(dateIn, "%d/%m/%Y")
         dateInFormated = time.strftime("%Y-%m-%d",dateInConv)
+
         if dateOut != None:
             dateOutConv = time.strptime(dateOut, "%d/%m/%Y")
             dateOutFormated = time.strftime("%Y-%m-%d",dateOutConv)
@@ -42,19 +43,26 @@ class Flight(models.Model):
         Flight.objects.filter(edreams_geoId_in = geoIdIn, edreams_geoId_out = geoIdOut
                                                             , trip_type = tripType, date_in = dateInFormated
                                                             , date_out = dateOutFormated).delete()
-        for flightData in flightsData:
-            print flightData
+
+        if len(flightsData) == 0:
             flightObj = Flight(edreams_geoId_in = geoIdIn, edreams_geoId_out = geoIdOut
                                                             , trip_type = tripType, date_in = dateInFormated
-                                                            , date_out = dateOutFormated
-            )
+                                                            , date_out = dateOutFormated, price=-1)
+        else:
+            for flightData in flightsData:
+                print flightData
+                flightObj = Flight(edreams_geoId_in = geoIdIn, edreams_geoId_out = geoIdOut
+                                                                , trip_type = tripType, date_in = dateInFormated
+                                                                , date_out = dateOutFormated)
 
-            flightObj.duration_in = flightData['durationIn']
-            flightObj.duration_out = flightData['durationOut']
-            flightObj.stops_in = flightData['stopsIn']
-            flightObj.stops_out = flightData['stopsOut']
-            flightObj.price = flightData['price']
-            flightObj.save()
+                flightObj.duration_in = flightData['durationIn']
+                flightObj.duration_out = flightData['durationOut']
+                flightObj.stops_in = flightData['stopsIn']
+                flightObj.stops_out = flightData['stopsOut']
+                flightObj.price = flightData['price']
+                flightObj.save()
+
+        flightObj.save()
 
     @staticmethod
     def storeEdreamsFlightBetweenCountries(country_code_in, country_code_out, date_in, date_out = None, only_main = True):
@@ -74,15 +82,31 @@ class Flight(models.Model):
                                                  , date_in, date_out, tripType)
 
     @staticmethod
-    def getListCheapestFlight(countryIn, countryOut, dateFrom, dateTo, limit=10):
-        aAirportsIn = Airport.objects.filter(country=countryIn)
-        aAirportsOut = Airport.objects.filter(country=countryOut)
+    def getListCheapestFlight(codeIn, codeOut, dateFrom, dateTo, limit=10):
+
+        if len(codeIn) == 2:
+            countryIn = Country.objects.get(code=codeIn)
+            aAirportsIn = Airport.objects.filter(country=countryIn)
+        else:
+            aAirportsIn = Airport.objects.filter(code=codeIn)
+
+        if len(codeOut) == 2:
+            countryOut = Country.objects.get(code=codeOut)
+            aAirportsOut = Airport.objects.filter(country=countryOut)
+        else:
+            aAirportsOut = Airport.objects.filter(code=codeOut)
+
+
 
         aFlightsGo = Flight.objects.filter(edreams_geoId_in__in = aAirportsIn.values_list('edreams_geoId', flat=True),
-                              edreams_geoId_out__in = aAirportsOut.values_list('edreams_geoId', flat=True),
-                              ).order_by('price')
+                              edreams_geoId_out__in = aAirportsOut.values_list('edreams_geoId', flat=True)
+                              ).exclude(price=-1).order_by('price')[:10]
+        # .annotate(Count('edreams_geoId_in'), Count('edreams_geoId_out'))
 
         return aFlightsGo
+
+
+
 ########################################################
 ##      COUNTRY ENTITY
 ########################################################
@@ -175,14 +199,14 @@ class Airport(models.Model):
             # It wasn't crawled it, then give it a chance ;)
             if 0 != len(aFlightPrice):
                 fPriceAirportAvarage = reduce(lambda x, y: x + y, aFlightPrice) / len(aFlightPrice)
-                print "Airport %s avarage price %f" % (oAirporOut.city, fPriceAirportAvarage)
+                # print "Airport %s avarage price %f" % (oAirporOut.city, fPriceAirportAvarage)
             else:
-                fPriceAirportAvarage = 9999999999
-                # print "Airport %s doesnt have previous experience" % (oAirporOut.city)
+                fPriceAirportAvarage = -1
 
             # If there is not previous experience, or avarage price is lower or there isn't more than 1 day crawled
             # print fPriceAirportAvarage < fGlobalAvaragePrice, fPriceAirportAvarage, fGlobalAvaragePrice
-            if None == fGlobalAvaragePrice or fPriceAirportAvarage < fGlobalAvaragePrice or len(aFlightDateRange) < 2:
+            if None == fGlobalAvaragePrice or (fPriceAirportAvarage < fGlobalAvaragePrice and fPriceAirportAvarage > 0) \
+                    or len(aFlightDateRange) < 3:
                 aBestAirportGeoId.append(oAirporOut.edreams_geoId)
 
         return Airport.objects.filter(edreams_geoId__in=aBestAirportGeoId)

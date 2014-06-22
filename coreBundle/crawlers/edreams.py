@@ -46,11 +46,11 @@ def _extractFlighDataRoundTrip(html):
 
     for idx, div in enumerate(soup.find_all('div', class_='singleItineray-content')):
         info = {
-          'price': price
-           , 'durationIn': durationInString
-           , 'durationOut': durationOutString
-           , 'stopsIn': stopInString
-           , 'stopsOut': stopOutString
+          'price': None
+           , 'durationIn': None
+           , 'durationOut': None
+           , 'stopsIn': None
+           , 'stopsOut': None
         }
         try:
             #Price

@@ -21,40 +21,44 @@ class Command(BaseCommand):
         dateFrom = datetime.datetime.strptime(args[2], "%d/%m/%Y").date()
         dateTo = datetime.datetime.strptime(args[3], "%d/%m/%Y").date()
 
-        # self.roundTripPeriod(args[0], args[1], dateFrom, dateTo)
         self.storePeriod(args[0], args[1], dateFrom, dateTo)
+        self.storePeriod(args[1], args[0], dateFrom, dateTo)
+        self.roundTripPeriod(args[0], args[1], dateFrom, dateTo)
 
     def roundTripPeriod(self, orig, dest, dateFrom, dateTo):
-        countryIn = Country.objects.get(code=orig)
-        countryOut = Country.objects.get(code=dest)
-        aCheapestFlightGo = Flight.getListCheapestFlight(countryIn, countryOut, dateFrom, dateTo)
-        aCheapestFlightBack = Flight.getListCheapestFlight(countryOut, countryIn, dateFrom, dateTo)
+        aCheapestFlightGo = Flight.getListCheapestFlight(orig, dest, dateFrom, dateTo)
+        aCheapestFlightBack = Flight.getListCheapestFlight(dest, orig, dateFrom, dateTo)
 
-        iMin = 9999999999999
         for oCheapestFlightGo in aCheapestFlightGo:
             for oCheapestFlightBack in aCheapestFlightBack:
                 if oCheapestFlightGo.date_in.strftime('%Y%m%d') < oCheapestFlightBack.date_in.strftime('%Y%m%d'):
-                    if  (oCheapestFlightGo.price + oCheapestFlightBack.price) < iMin:
-                        iMin = oCheapestFlightGo.price + oCheapestFlightBack.price
-                        print iMin, oCheapestFlightGo.edreams_geoId_in,oCheapestFlightBack.edreams_geoId_in, oCheapestFlightGo.date_in, oCheapestFlightBack.date_in
-                        Flight.storeEdreamsFlightByCode(oCheapestFlightGo.edreams_geoId_in,
-                                                                oCheapestFlightBack.edreams_geoId_in,
-                                                                oCheapestFlightGo.date_in.strftime("%d/%m/%Y"),
-                                                                oCheapestFlightBack.date_in.strftime("%d/%m/%Y"),
-                                                                'ROUND_TRIP')
+                    Flight.storeEdreamsFlightByCode(oCheapestFlightGo.edreams_geoId_in,
+                                                            oCheapestFlightBack.edreams_geoId_in,
+                                                            oCheapestFlightGo.date_in.strftime("%d/%m/%Y"),
+                                                            oCheapestFlightBack.date_in.strftime("%d/%m/%Y"),
+                                                            'ROUND_TRIP')
 
 
 
     def storePeriod(self, orig, dest, dateFrom, dateTo):
 
         for dt in rrule(DAILY, dtstart=dateFrom, until=dateTo):
-            countryIn = Country.objects.get(code=orig)
-            airportsIn = Airport.objects.filter(country=countryIn, is_main=True)
+
+            if len(orig) == 2:
+                countryIn = Country.objects.get(code=orig)
+                airportsIn = Airport.objects.filter(country=countryIn, is_main=True)
+            else:
+                airportsIn = Airport.objects.filter(code=orig)
+
             tripType = 'ONE_WAY'
             dateInFormatted = dt.strftime("%d/%m/%Y")
 
             for airportIn in airportsIn:
-                airportsOut = airportIn.getBestConexionAirports(dest)
+                if len(dest) == 2:
+                    airportsOut = airportIn.getBestConexionAirports(dest)
+                else:
+                    airportsOut = Airport.objects.filter(code=dest)
+
                 for airportOut in airportsOut:
                     print "From %s to %s at %s" % (airportIn.code, airportOut.code, dateInFormatted)
                     Flight.storeEdreamsFlightByCode(airportIn.edreams_geoId, airportOut.edreams_geoId
