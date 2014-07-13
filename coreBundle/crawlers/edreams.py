@@ -113,12 +113,14 @@ def getEdreamCrawledFlights(tripType, departureGeoId, arrivalGeoId, departureCit
         # , 'collectionTypeEstimationNeeded': 'false'
         # , 'resultsFromSearch': 'true'
     }
-
+    # print params;
     if proxy_active == True:
         html = getHtmlProxy(url, params, proxy_ip, proxy_port)
     else:
         html = getHtml2(url, params)
-
+    text_file = open("last_crawled.html", "w")
+    text_file.write(html)
+    text_file.close()
     if tripType == 'ROUND_TRIP':
         return _extractFlighDataRoundTrip(html)
     elif tripType == 'ONE_WAY':

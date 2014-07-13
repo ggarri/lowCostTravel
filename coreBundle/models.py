@@ -31,6 +31,7 @@ class Flight(models.Model):
     @staticmethod
     def storeEdreamsFlightByCode(geoIdIn, geoIdOut, dateIn , dateOut = None, tripType = 'ONE_WAY'):
         flightsData = getEdreamCrawledFlights(tripType, geoIdIn, geoIdOut, None, None, dateIn, dateOut)
+        print flightsData
         dateInConv = time.strptime(dateIn, "%d/%m/%Y")
         dateInFormated = time.strftime("%Y-%m-%d",dateInConv)
 
@@ -174,7 +175,7 @@ class Airport(models.Model):
 
     def getBestConexionAirports(self, country_code_out):
         oCountryOut = Country.objects.get(code=country_code_out)
-        aAirportOut = Airport.objects.filter(country=oCountryOut, is_main=True)
+        aAirportOut = Airport.objects.filter(country=oCountryOut)
 
         # Calculate global avarage prices
         aAllFlights = Flight.objects.filter(edreams_geoId_in=self.edreams_geoId

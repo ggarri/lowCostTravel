@@ -25,6 +25,7 @@ def getHtml2(url, params):
     data = urllib.urlencode(params)
     req = urllib2.Request(url)
     for headType, headValue in eDreamsHeaders.items() :
+        print headType, headValue
         req.add_header(headType, headValue)
 
     response = urllib2.urlopen(req, data)

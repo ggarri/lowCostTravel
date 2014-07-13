@@ -10,7 +10,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
 
-        if len(args) < 2:
+        if len(args) < 1:
             print 'EROOR: It must be ' + self.args
             sys.exit(-1)
 
