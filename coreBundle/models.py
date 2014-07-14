@@ -175,11 +175,14 @@ class Airport(models.Model):
 
     def getBestConexionAirports(self, country_code_out):
         oCountryOut = Country.objects.get(code=country_code_out)
-        aAirportOut = Airport.objects.filter(country=oCountryOut)
+        aAirportOut = Airport.objects.filter(country=oCountryOut, is_main=True)
 
         # Calculate global avarage prices
         aAllFlights = Flight.objects.filter(edreams_geoId_in=self.edreams_geoId
-                                       , edreams_geoId_out__in=aAirportOut.values_list('edreams_geoId'))
+                                       , edreams_geoId_out__in=aAirportOut.values_list('edreams_geoId')) \
+                      | Flight.objects.filter(edreams_geoId_out=self.edreams_geoId
+                                       , edreams_geoId_in__in=aAirportOut.values_list('edreams_geoId'))
+
         aAllFlightPrice = set(aAllFlights.values_list('price', flat=True))
         aFlightDateRange = set(aAllFlights.values_list('date_in'))
 
@@ -193,7 +196,9 @@ class Airport(models.Model):
         aBestAirportGeoId = []
         for oAirporOut in aAirportOut:
             aFlightOutList = Flight.objects.filter(edreams_geoId_in=self.edreams_geoId
-                                       , edreams_geoId_out=oAirporOut.edreams_geoId)
+                                       , edreams_geoId_out=oAirporOut.edreams_geoId) \
+                      | Flight.objects.filter(edreams_geoId_out=self.edreams_geoId
+                                       , edreams_geoId_in=oAirporOut.edreams_geoId)
 
             aFlightPrice = set(aFlightOutList.values_list('price', flat=True))
 

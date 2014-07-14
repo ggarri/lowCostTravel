@@ -21,7 +21,7 @@ class Command(BaseCommand):
         dateFrom = datetime.datetime.strptime(args[2], "%d/%m/%Y").date()
         dateTo = datetime.datetime.strptime(args[3], "%d/%m/%Y").date()
 
-        self.storePeriod(args[0], args[1], dateFrom, dateTo)
+        # self.storePeriod(args[0], args[1], dateFrom, dateTo)
         self.storePeriod(args[1], args[0], dateFrom, dateTo)
         self.roundTripPeriod(args[0], args[1], dateFrom, dateTo)
 
