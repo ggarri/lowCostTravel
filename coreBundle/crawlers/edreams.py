@@ -106,12 +106,12 @@ def getEdreamCrawledFlights(tripType, departureGeoId, arrivalGeoId, departureCit
         # , 'numberOfRooms': 1
         # , 'buyPath': 1
         # , 'auxOrBt': 0
-        # , 'applyAllTaxes': 'false'
+        , 'applyAllTaxes': 'true'
         # , 'cabinClassName': ''
         # , 'filteringCarrier': ''
         # , 'fake_filteringCarrier': "Todas las compañías"
         # , 'collectionTypeEstimationNeeded': 'false'
-        # , 'resultsFromSearch': 'true'
+        , 'resultsFromSearch': 'true'
     }
     # print params;
     if proxy_active == True:

@@ -7,19 +7,22 @@ import StringIO
 eDreamsHeaders = {
     'Pragma': 'no-cache'
     , 'Origin': 'http://www.edreams.es'
+    , 'Host': 'www.edreams.es'
     , 'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/32.0.1700.107 Safari/537.36'
     , 'Content-Type': 'application/x-www-form-urlencoded'
     , 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8'
-    , 'Cache-Control': 'no-cache'
-    , 'Referer': 'http://www.edreams.es/'
+    , 'Cache-Control': 'no-cache, must-revalidate'
+    , 'Referer': 'http://www.edreams.es/engine/ItinerarySearch/search'
     , 'Connection': 'keep-alive'
 }
 
+
 def getHtml(url, params):
-	params = urllib.urlencode(params)
-	response = urllib2.urlopen(url, params)
-	html = response.read()
-	return html
+    params = urllib.urlencode(params)
+    response = urllib2.urlopen(url, params)
+    html = response.read()
+    return html
+
 
 def getHtml2(url, params):
     data = urllib.urlencode(params)
@@ -31,15 +34,6 @@ def getHtml2(url, params):
     response = urllib2.urlopen(req, data)
     html = response.read()
     return html
-
-    # req.add_header('Pragma', 'no-cache')
-    # req.add_header('Origin', 'http://www.edreams.es')
-    # req.add_header('User-Agent', 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/32.0.1700.107 Safari/537.36')
-    # req.add_header('Content-Type', 'application/x-www-form-urlencoded')
-    # req.add_header('Accept', 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8')
-    # req.add_header('Cache-Control', 'no-cache')
-    # req.add_header('Referer', 'http://www.edreams.es/')
-    # req.add_header('Connection', 'keep-alive')
 
 def getHtmlProxy(url, params, ip = None, port = None):
     output = StringIO.StringIO()

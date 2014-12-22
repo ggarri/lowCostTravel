@@ -80,6 +80,7 @@ class producer (threading.Thread):
                 airportsOut = Airport.objects.filter(code=dest)
 
             for airportOut in airportsOut:
+                print "%s: Pushing [%s>%s] at %s" % (self.name, airportIn.code, airportOut.code, dateIn)
                 self.q2.put({
                     'edreams_geoId': airportIn.edreams_geoId
                     ,'edreams_geoOut': airportOut.edreams_geoId
