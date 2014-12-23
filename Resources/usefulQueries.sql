@@ -32,8 +32,8 @@ ORDER BY price asc, duration_in desc
 SELECT a2.code, a.code, f.*
 FROM coreBundle_country c
 INNER JOIN coreBundle_airport a ON (a.country_id = c.id)
-INNER JOIN coreBundle_flight f ON (f.edreams_geoId_out = a.edreams_geoId)
-INNER JOIN coreBundle_airport a2 ON (a2.edreams_geoId = f.edreams_geoId_in)
+INNER JOIN coreBundle_flight f ON (f.edreams_geoId_in = a.edreams_geoId OR f.edreams_geoId_out = a.edreams_geoId)
+INNER JOIN coreBundle_airport a2 ON (a2.edreams_geoId = f.edreams_geoId_out OR a2.edreams_geoId = f.edreams_geoId_in)
 WHERE c.code = 'CU' AND f.price <> -1
 ORDER BY f.trip_type <> 'ONE_WAY' DESC, f.price asc, f.duration_in desc
 

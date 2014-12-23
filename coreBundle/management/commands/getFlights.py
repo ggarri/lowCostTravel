@@ -56,11 +56,18 @@ class Command(BaseCommand):
         for oCheapestFlightGo in aCheapestFlightGo:
             for oCheapestFlightBack in aCheapestFlightBack:
                 if oCheapestFlightGo.date_in.strftime('%Y%m%d') < oCheapestFlightBack.date_in.strftime('%Y%m%d'):
-                    Flight.storeEdreamsFlightByCode(oCheapestFlightGo.edreams_geoId_in,
-                                                            oCheapestFlightBack.edreams_geoId_in,
-                                                            oCheapestFlightGo.date_in.strftime("%d/%m/%Y"),
-                                                            oCheapestFlightBack.date_in.strftime("%d/%m/%Y"),
-                                                            'ROUND_TRIP')
+                    self.producerQueue.put({
+                        'orig': oCheapestFlightGo.getAirportIn().code
+                        , 'dest': oCheapestFlightBack.getAirportIn().code
+                        , 'tripType': 'ROUND_TRIP'
+                        , 'dateIn': oCheapestFlightGo.date_in.strftime("%d/%m/%Y")
+                        , 'dateOut': oCheapestFlightBack.date_in.strftime("%d/%m/%Y")
+                    })
+                    # Flight.storeEdreamsFlightByCode(oCheapestFlightGo.edreams_geoId_in,
+                    #                                         oCheapestFlightBack.edreams_geoId_in,
+                    #                                         oCheapestFlightGo.date_in.strftime("%d/%m/%Y"),
+                    #                                         oCheapestFlightBack.date_in.strftime("%d/%m/%Y"),
+                    #                                         'ROUND_TRIP')
 
 
 

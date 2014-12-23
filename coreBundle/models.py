@@ -28,6 +28,13 @@ class Flight(models.Model):
     date_out = models.DateTimeField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now=True, null=True)
 
+
+    def getAirportIn(self):
+        return Airport.objects.filter(edreams_geoId=self.edreams_geoId_in)[0]
+
+    def getAirportOut(self):
+        return Airport.objects.filter(edreams_geoId=self.edreams_geoId_out)[0]
+
     @staticmethod
     def storeEdreamsFlightByCode(geoIdIn, geoIdOut, dateIn , dateOut = None, tripType = 'ONE_WAY'):
         flightsData = getEdreamCrawledFlights(tripType, geoIdIn, geoIdOut, None, None, dateIn, dateOut)
@@ -101,7 +108,7 @@ class Flight(models.Model):
 
         aFlightsGo = Flight.objects.filter(edreams_geoId_in__in = aAirportsIn.values_list('edreams_geoId', flat=True),
                               edreams_geoId_out__in = aAirportsOut.values_list('edreams_geoId', flat=True)
-                              ).exclude(price=-1).order_by('price')[:10]
+                              ).exclude(price=-1).order_by('price')[:50]
         # .annotate(Count('edreams_geoId_in'), Count('edreams_geoId_out'))
 
         return aFlightsGo
