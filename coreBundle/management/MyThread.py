@@ -63,7 +63,7 @@ class producer (threading.Thread):
         job = self.q.get()
         self.cond.release()
 
-        print "%s: Pushing [%s>%s] at %s" % (self.name, job['orig'], job['dest'], job['dateIn'])
+        print "%s: Pushing [%s>%s] at %s - %s" % (self.name, job['orig'], job['dest'], job['dateIn'], job['dateOut'])
         self._pushFlighData(job['orig'], job['dest'], job['tripType'], job['dateIn'], job['dateOut'])
 
     def _pushFlighData(self, orig, dest, tripType, dateIn, dateOut):
@@ -80,11 +80,12 @@ class producer (threading.Thread):
                 airportsOut = Airport.objects.filter(code=dest)
 
             for airportOut in airportsOut:
+                print "%s: Pushing [%s>%s] at %s" % (self.name, airportIn.code, airportOut.code, dateIn)
                 self.q2.put({
                     'edreams_geoId': airportIn.edreams_geoId
                     ,'edreams_geoOut': airportOut.edreams_geoId
                     ,'dateInFormatted': dateIn
-                    ,'dateOutFormatted': None
+                    ,'dateOutFormatted': dateOut
                     ,'tripType': tripType
                     ,'codeIn': airportIn.code
                     ,'codeOut': airportOut.code

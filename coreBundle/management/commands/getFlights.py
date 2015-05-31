@@ -36,8 +36,8 @@ class Command(BaseCommand):
         self.initThreads()
 
         self.storePeriod(args[0], args[1], dateFrom, dateTo)
-        # self.storePeriod(args[1], args[0], dateFrom, dateTo)
-        # self.roundTripPeriod(args[0], args[1], dateFrom, dateTo)
+        self.storePeriod(args[1], args[0], dateFrom, dateTo)
+        self.roundTripPeriod(args[0], args[1], dateFrom, dateTo)
 
     def initThreads(self):
         for tId in range(0, self.nConsumer):
@@ -53,15 +53,21 @@ class Command(BaseCommand):
     def roundTripPeriod(self, orig, dest, dateFrom, dateTo):
         aCheapestFlightGo = Flight.getListCheapestFlight(orig, dest, dateFrom, dateTo)
         aCheapestFlightBack = Flight.getListCheapestFlight(dest, orig, dateFrom, dateTo)
-
         for oCheapestFlightGo in aCheapestFlightGo:
             for oCheapestFlightBack in aCheapestFlightBack:
                 if oCheapestFlightGo.date_in.strftime('%Y%m%d') < oCheapestFlightBack.date_in.strftime('%Y%m%d'):
-                    Flight.storeEdreamsFlightByCode(oCheapestFlightGo.edreams_geoId_in,
-                                                            oCheapestFlightBack.edreams_geoId_in,
-                                                            oCheapestFlightGo.date_in.strftime("%d/%m/%Y"),
-                                                            oCheapestFlightBack.date_in.strftime("%d/%m/%Y"),
-                                                            'ROUND_TRIP')
+                    self.producerQueue.put({
+                        'orig': oCheapestFlightGo.getAirportIn().code
+                        , 'dest': oCheapestFlightBack.getAirportIn().code
+                        , 'tripType': 'ROUND_TRIP'
+                        , 'dateIn': oCheapestFlightGo.date_in.strftime("%d/%m/%Y")
+                        , 'dateOut': oCheapestFlightBack.date_in.strftime("%d/%m/%Y")
+                    })
+                    # Flight.storeEdreamsFlightByCode(oCheapestFlightGo.edreams_geoId_in,
+                    #                                         oCheapestFlightBack.edreams_geoId_in,
+                    #                                         oCheapestFlightGo.date_in.strftime("%d/%m/%Y"),
+                    #                                         oCheapestFlightBack.date_in.strftime("%d/%m/%Y"),
+                    #                                         'ROUND_TRIP')
 
 
 
@@ -75,32 +81,3 @@ class Command(BaseCommand):
                 , 'dateIn': dt.strftime("%d/%m/%Y")
                 , 'dateOut': None
             })
-            # if len(orig) == 2:
-            #     countryIn = Country.objects.get(code=orig)
-            #     airportsIn = Airport.objects.filter(country=countryIn, is_main=True)
-            # else:
-            #     airportsIn = Airport.objects.filter(code=orig)
-            #
-            # tripType = 'ONE_WAY'
-            # dateInFormatted = dt.strftime("%d/%m/%Y")
-            #
-            # for airportIn in airportsIn:
-            #     if len(dest) == 2:
-            #         airportsOut = airportIn.getBestConexionAirports(dest)
-            #     else:
-            #         airportsOut = Airport.objects.filter(code=dest)
-            #
-            #     for airportOut in airportsOut:
-            #         self.workQueue.put({
-            #             'edreams_geoId': airportIn.edreams_geoId
-            #             ,'edreams_geoOut': airportOut.edreams_geoId
-            #             ,'dateInFormatted': dateInFormatted
-            #             ,'dateOutFormatted': None
-            #             ,'tripType': tripType
-            #             ,'codeIn': airportIn.code
-            #             ,'codeOut': airportOut.code
-            #         })
-                    # print "From %s to %s at %s" % (airportIn.code, airportOut.code, dateInFormatted)
-                    # Flight.storeEdreamsFlightByCode(airportIn.edreams_geoId, airportOut.edreams_geoId
-                    #                                  , dateInFormatted, None, tripType)
-                # self._cond.notifyAll()
