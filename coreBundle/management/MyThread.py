@@ -1,13 +1,14 @@
 #!/usr/bin/python
 
-import Queue
 import threading
 import time
-from datetime import date
-from coreBundle.models import *
+from coreBundle.models.Country import Country
+from coreBundle.models.Flight import Flight
+from coreBundle.models.Airport import Airport
 
 
-class consumer (threading.Thread):
+
+class consumer(threading.Thread):
 
     def __init__(self, threadID, lock, cond, q):
         threading.Thread.__init__(self)

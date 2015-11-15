@@ -1,7 +1,9 @@
 from django.core.management.base import BaseCommand, CommandError
 
 import sys
-from coreBundle.models import *
+from coreBundle.bussiness.CrawlBusiness import CrawlBussiness
+from coreBundle.crawlers.EdreamsCrawler import EdreamsCrawler
+
 
 class Command(BaseCommand):
 
@@ -13,6 +15,9 @@ class Command(BaseCommand):
         if len(args) < 1:
             print 'EROOR: It must be ' + self.args
             sys.exit(-1)
+        else:
+            code = args[0]
 
-        code = args[0]
-        Airport.storeEdreamsCitiesByCountryCode(code)
+        crawler = EdreamsCrawler()
+        bussiness = CrawlBussiness(crawler)
+        bussiness.store_aiport_in_country(code)
