@@ -9,13 +9,16 @@ from coreBundle.models.StopOver import StopOver
 import time
 
 
-class CrawlBussiness():
+class CrawlBusiness():
     """
     :type crawler: CrawlerABC
     """
     crawler = None
     
     def __init__(self, crawler):
+        """
+        :param crawler: CrawlerABC
+        """
         self.crawler = crawler
 
     def store_countries_start_with(self, letter):
@@ -134,8 +137,13 @@ class CrawlBussiness():
             flight.save()
         return flights
 
-    @staticmethod
-    def get_list_cheapest_flight(code_in, code_out, limit=10):
+    def get_list_cheapest_flight(self, code_in, code_out, limit=10):
+        """
+        :param code_in: string
+        :param code_out: string
+        :param limit: int
+        :return: list(Flight)
+        """
         if len(code_in) == 2:
             country_in = Country.objects.get(code=code_in)
             airports_in = Airport.objects.filter(country=country_in)

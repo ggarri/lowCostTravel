@@ -4,25 +4,21 @@ import sys
 from django.core.management.base import BaseCommand, CommandError
 from dateutil.rrule import rrule, DAILY
 from coreBundle.management.MyThread import *
+from coreBundle.bussiness.CrawlBusiness import CrawlBusiness
+from coreBundle.bussiness.TheadBussiness import TheadBussiness
+from coreBundle.crawlers import EdreamsCrawler
+
 
 class Command(BaseCommand):
 
     args = '<country_orig country_dest date_from date_to>'
     help = 'Closes the specified poll for voting'
 
-    consumerList = []
-    nConsumer = 10
-    consumerQueue = Queue.Queue(0)
-
-    producerList = []
-    nProducer = 2
-    producerQueue = Queue.Queue(0)
-
-    _lock = threading.Condition(threading.Lock())
-    _cond = threading.Condition(_lock)
-
-    _lock2 = threading.Condition(threading.Lock())
-    _cond2 = threading.Condition(_lock2)
+    def __init__(self):
+        _crawler = EdreamsCrawler()
+        self.crawler_bc = CrawlBusiness(_crawler)
+        self.thead_bc = TheadBussiness(self.crawler_bc, 2, 2)
+        self.thead_bc.run()
 
     def handle(self, *args, **options):
 
@@ -30,51 +26,32 @@ class Command(BaseCommand):
             print 'EROOR: It must be ' + self.args
             sys.exit(-1)
 
-        dateFrom = datetime.datetime.strptime(args[2], "%d/%m/%Y").date()
-        dateTo = datetime.datetime.strptime(args[3], "%d/%m/%Y").date()
+        date_from = datetime.datetime.strptime(args[2], "%d/%m/%Y").date()
+        date_to = datetime.datetime.strptime(args[3], "%d/%m/%Y").date()
 
-        self.initThreads()
+        self.one_way_trip_finder(args[0], args[1], date_from, date_to)
+        self.one_way_trip_finder(args[1], args[0], date_from, date_to)
+        self.round_trip_finder(args[0], args[1], date_from, date_to)
 
-        self.storePeriod(args[0], args[1], dateFrom, dateTo)
-        self.storePeriod(args[1], args[0], dateFrom, dateTo)
-        self.roundTripPeriod(args[0], args[1], dateFrom, dateTo)
+    def round_trip_finder(self, code_from, code_to, date_from, date_to):
+        cheapest_flight_go = self.crawler_bc.get_list_cheapest_flight(code_from, code_to)
+        cheapest_flight_back = self.crawler_bc.get_list_cheapest_flight(code_to, code_from)
 
-    def initThreads(self):
-        for tId in range(0, self.nConsumer):
-            t = consumer(tId, self._lock, self._cond, self.consumerQueue)
-            t.start()
-            self.consumerList.append(t)
-
-        for tId in range(0, self.nProducer):
-            t = producer(tId, self._lock2, self._cond2, self.producerQueue, self.consumerQueue)
-            t.start()
-            self.producerList.append(t)
-
-    def roundTripPeriod(self, orig, dest, dateFrom, dateTo):
-        aCheapestFlightGo = Flight.getListCheapestFlight(orig, dest, dateFrom, dateTo)
-        aCheapestFlightBack = Flight.getListCheapestFlight(dest, orig, dateFrom, dateTo)
-        for oCheapestFlightGo in aCheapestFlightGo:
-            for oCheapestFlightBack in aCheapestFlightBack:
-                if oCheapestFlightGo.date_in.strftime('%Y%m%d') < oCheapestFlightBack.date_in.strftime('%Y%m%d'):
-                    self.producerQueue.put({
-                        'orig': oCheapestFlightGo.getAirportIn().code
-                        , 'dest': oCheapestFlightBack.getAirportIn().code
+        for cheap_flight_go in cheapest_flight_go:
+            for cheap_flight_back in cheapest_flight_back:
+                if cheap_flight_go.date_in.strftime('%Y%m%d') < cheap_flight_back.date_in.strftime('%Y%m%d'):
+                    self.thead_bc.push_work({
+                        'orig': cheap_flight_go.get_airport_in().code
+                        , 'dest': cheap_flight_back.get_airport_in().code
                         , 'tripType': 'ROUND_TRIP'
-                        , 'dateIn': oCheapestFlightGo.date_in.strftime("%d/%m/%Y")
-                        , 'dateOut': oCheapestFlightBack.date_in.strftime("%d/%m/%Y")
+                        , 'dateIn': cheap_flight_go.date_in.strftime("%d/%m/%Y")
+                        , 'dateOut': cheap_flight_back.date_in.strftime("%d/%m/%Y")
                     })
-                    # Flight.storeEdreamsFlightByCode(oCheapestFlightGo.edreams_geoId_in,
-                    #                                         oCheapestFlightBack.edreams_geoId_in,
-                    #                                         oCheapestFlightGo.date_in.strftime("%d/%m/%Y"),
-                    #                                         oCheapestFlightBack.date_in.strftime("%d/%m/%Y"),
-                    #                                         'ROUND_TRIP')
 
+    def one_way_trip_finder(self, orig, dest, date_from, date_to):
 
-
-    def storePeriod(self, orig, dest, dateFrom, dateTo):
-
-        for dt in rrule(DAILY, dtstart=dateFrom, until=dateTo):
-            self.producerQueue.put({
+        for dt in rrule(DAILY, dtstart=date_from, until=date_to):
+            self.thead_bc.push_work({
                 'orig': orig
                 , 'dest': dest
                 , 'tripType': 'ONE_WAY'
