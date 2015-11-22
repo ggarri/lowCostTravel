@@ -41,8 +41,8 @@ class Command(BaseCommand):
             for cheap_flight_back in cheapest_flight_back:
                 if cheap_flight_go.date_in.strftime('%Y%m%d') < cheap_flight_back.date_in.strftime('%Y%m%d'):
                     self.thead_bc.push_work({
-                        'orig': cheap_flight_go.get_airport_in().code
-                        , 'dest': cheap_flight_back.get_airport_in().code
+                        'orig': cheap_flight_go.airport_in
+                        , 'dest': cheap_flight_back.airport_in
                         , 'tripType': 'ROUND_TRIP'
                         , 'dateIn': cheap_flight_go.date_in.strftime("%d/%m/%Y")
                         , 'dateOut': cheap_flight_back.date_in.strftime("%d/%m/%Y")

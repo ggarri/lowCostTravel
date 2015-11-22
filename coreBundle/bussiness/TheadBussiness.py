@@ -84,8 +84,10 @@ class Consumer(threading.Thread):
         job = self.q.get()
         self.cond.release()
 
-        print "%s: Running flight [%s>%s] at %s" % (self.name, job['codeIn'], job['codeOut'], job['dateInFormatted'])
-        self.crawler.store_flights_between_geo_id(job['edreams_geoId'], job['edreams_geoOut'],
+        print "%s: Running flight [%s>%s] at %s" % (self.name, job['airportIn'], job['airportOut'],
+                                                    job['dateInFormatted'])
+
+        self.crawler.store_flights_between_geo_id(job['airportIn'], job['airportOut'],
                                                   job['dateInFormatted'], job['dateOutFormatted'])
 
 
@@ -136,18 +138,16 @@ class Producer (threading.Thread):
         for airportIn in airpots_from:
             # In case of 2 lenght, it is a country code otherwise it is an aiport
             if len(dest) == 2:
-                airports_to = self.crawler.get_best_conexion(dest)
+                airports_to = self.crawler.get_best_conexion(airportIn, dest)
             else:
                 airports_to = Airport.objects.filter(code=dest)
 
             for airportOut in airports_to:
                 print "%s: Pushing [%s>%s] at %s" % (self.name, airportIn.code, airportOut.code, date_from)
                 self.q2.put({
-                    'edreams_geoId': airportIn.edreams_geoId,
-                    'edreams_geoOut': airportOut.edreams_geoId,
                     'dateInFormatted': date_from,
                     'dateOutFormatted': date_to,
                     'tripType': trip_type,
-                    'codeIn': airportIn.code,
-                    'codeOut': airportOut.code
+                    'airportIn': airportIn.code,
+                    'airportOut': airportOut.code
                 })

@@ -1,3 +1,5 @@
+from coreBundle.crawlers.EdreamsCrawler import EdreamsCrawler
+from coreBundle.models.AirportCode import AirportCode
 from coreBundle.models.Flight import Flight
 
 __author__ = 'ggarrido'
@@ -28,12 +30,9 @@ class CrawlBusiness():
         """
         countries = self._get_countries_start_with(letter)
         for country in countries:
+            print "Saving Country: %s (%s)" % (country.name, country.code)
             country.save()
         return countries
-
-    def save_country_code(self):
-        for letter in list(map(chr, range(97, 123))):
-            self.store_country_code_by_letter(letter)
 
     def store_aiport_in_country(self, country_code):
         """
@@ -41,9 +40,16 @@ class CrawlBusiness():
         :return: list(Airport)
         """
         country = Country.objects.get(code=country_code)
-        airports = self._get_aiports_in_country(country)
+        airports, airport_codes = self._get_aiports_in_country(country)
+
         for airport in airports:
+            print "Saving Airport: %s - %s at (%s)" % (airport.name, airport.code, country.name)
             airport.save()
+
+        for airport_code in airport_codes:
+            print "Saving AirportCode: %s (%s)" % (airport_code.edreams_geoId, airport.code)
+            airport_code.save()
+
         return airports
 
     @staticmethod
@@ -55,15 +61,14 @@ class CrawlBusiness():
         country = Country.objects.get(code=country_code)
         Airport.objects.filter(country=country).update(is_main=True)
 
-    def get_best_conexion(self, country_code):
+    # TODO Improve this method
+    def get_best_conexion(self, airport_in, country_code):
         out_country = Country.objects.get(code=country_code)
         out_airports = Airport.objects.filter(country=out_country, is_main=True)
 
         # Calculate global avarage prices
-        all_flights = Flight.objects.filter(edreams_geoId_in=self.edreams_geoId
-                                       , edreams_geoId_out__in=out_airports.values_list('edreams_geoId')) \
-                      | Flight.objects.filter(edreams_geoId_out=self.edreams_geoId
-                                       , edreams_geoId_in__in=out_airports.values_list('edreams_geoId'))
+        all_flights = Flight.objects.filter(airport_out__in=out_airports, airport_in=airport_in) \
+                      | Flight.objects.filter(airport_in__in=out_airports, airport_out=airport_in)
 
         all_flight_prices = set(all_flights.values_list('price', flat=True))
         date_range_flights = set(all_flights.values_list('date_in'))
@@ -75,12 +80,10 @@ class CrawlBusiness():
             print "Global avarage price %f with %d days crawled" % (fGlobalAvaragePrice, len(date_range_flights))
 
         # Get the list of airport which has price lower than global avarage
-        best_geo_id_airports = []
+        best_airports = []
         for out_airport in out_airports:
-            out_flights = Flight.objects.filter(edreams_geoId_in=self.edreams_geoId
-                                       , edreams_geoId_out=out_airport.edreams_geoId) \
-                      | Flight.objects.filter(edreams_geoId_out=self.edreams_geoId
-                                       , edreams_geoId_in=out_airport.edreams_geoId)
+            out_flights = Flight.objects.filter(airport_out=out_airport, airport_in=airport_in) \
+                      | Flight.objects.filter(airport_in=out_airport, airport_out=airport_in)
 
             out_flight_prices = set(out_flights.values_list('price', flat=True))
 
@@ -95,19 +98,23 @@ class CrawlBusiness():
             # print fPriceAirportAvarage < fGlobalAvaragePrice, fPriceAirportAvarage, fGlobalAvaragePrice
             if None == fGlobalAvaragePrice or (fPriceAirportAvarage < fGlobalAvaragePrice and fPriceAirportAvarage > 0) \
                     or len(date_range_flights) < 3:
-                best_geo_id_airports.append(out_airport.edreams_geoId)
+                best_airports.append(out_airport)
 
-        return Airport.objects.filter(edreams_geoId__in=best_geo_id_airports)
+        return Airport.objects.filter(aiport_in__in=best_airports)
 
-    def store_flights_between_geo_id(self, geo_id_from, geo_id_to, date_from, date_to=None):
-        stop_over_from = StopOver(geo_id=geo_id_from, date=date_from)
-        stop_over_to = StopOver(geo_id=geo_id_to, date=date_to)
+    def store_flights_between_geo_id(self, airport_in_code, airport_out_code, date_from, date_to=None):
+        airport_in = Flight.objects.get(code=airport_in_code)
+        airport_out = Flight.objects.get(code=airport_out_code)
+
+        stop_over_from = StopOver(airport_in, date=date_from)
+        stop_over_to = StopOver(airport_out, date=date_to)
+
         trip_type = 'ONE_WAY' if date_to is None else 'ROUND_TRIP'
 
         flights = self._get_flights_between_geo_id(stop_over_from, stop_over_to, trip_type)
 
         # Deleting old data from the same flights
-        Flight.objects.filter(edreams_geoId_in=stop_over_from.geo_id, edreams_geoId_out=stop_over_to.geo_id,
+        Flight.objects.filter(aiport_in=airport_in.geo_id, airport_out=airport_out,
                               trip_type=trip_type, date_in=stop_over_from.get_date_formated,
                               date_out=stop_over_to.get_date_formated).delete()
 
@@ -128,8 +135,8 @@ class CrawlBusiness():
         flights = list()
         for airport_from in airports_from:
             for airport_to in airports_to:
-                stop_over_from = StopOver(geo_id=airport_from.geo_id, date=date_from)
-                stop_over_to = StopOver(geo_id=airport_to.geo_id, date=date_to)
+                stop_over_from = StopOver(airport_from, date=date_from)
+                stop_over_to = StopOver(airport_to, date=date_to)
                 _flights = self._get_flights_between_geo_id(stop_over_from, stop_over_to, trip_type)
                 flights.append(_flights)
 
@@ -156,9 +163,9 @@ class CrawlBusiness():
         else:
             airports_out = Airport.objects.filter(code=code_out)
 
-        flights = Flight.objects.filter(edreams_geoId_in__in=airports_in.values_list('edreams_geoId', flat=True),
-                              edreams_geoId_out__in=airports_out.values_list('edreams_geoId', flat=True)
-                              ).exclude(price=-1).order_by('price')[:limit]
+        flights = Flight.objects.filter(airport_in__in=airports_in, airport_out__in=airports_out).exclude(
+            price=-1).order_by('price')[:limit]
+
         return flights
 
     ############################################
@@ -186,12 +193,19 @@ class CrawlBusiness():
         """
         data_airports = self.crawler.get_aiports(country.code)
         airports = list()
+        airport_codes = list()
         for data_airport in data_airports:
-            aiport, is_new = Airport.objects.get_or_create(edreams_geoId=data_airport['geoId'], country=country,
-                                                                code=data_airport['code'])
+            aiport, is_new = Airport.objects.get_or_create(country=country, code=data_airport['code'])
             aiport.city = data_airport['city']
             airports.append(aiport)
-        return airports
+
+            airport_code, is_new = AirportCode.objects.get_or_create(airport=aiport)
+            if isinstance(self.crawler, EdreamsCrawler):
+                airport_code.edreams_geoId = data_airport['geoId']
+
+            airport_codes.append(aiport)
+
+        return airports, airport_codes
 
     def _get_flights_between_geo_id(self, stop_over_from, stop_over_to, trip_type='ONE_WAY'):
         """
@@ -204,15 +218,15 @@ class CrawlBusiness():
         data_flights = self.crawler.get_flights(trip_type, stop_over_from, stop_over_to)
         flights = list()
         if len(data_flights) == 0:
-            flight = Flight(edreams_geoId_in=stop_over_from.geo_id, edreams_geoId_out=stop_over_to.geo_id,
+            flight = Flight(airport_in=stop_over_from.airport, airport_out=stop_over_to.airport,
                             trip_type=trip_type, date_in=stop_over_from.get_date_formated(),
                             date_out=stop_over_to.get_date_formated(), price=-1)
             flights.append(flight)
         else:
             for data_flight in data_flights:
-                flight = Flight(edreams_geoId_in=stop_over_from.geo_id, edreams_geoId_out=stop_over_to.geo_id,
-                                   trip_type=trip_type, date_in = stop_over_from.get_date_formated(),
-                                   date_out=stop_over_to.get_date_formated())
+                flight = Flight(airport_in=stop_over_from.airport, airport_out=stop_over_to.airport,
+                                trip_type=trip_type, date_in = stop_over_from.get_date_formated(),
+                                date_out=stop_over_to.get_date_formated())
 
                 flight.duration_in = data_flight['durationIn']
                 flight.duration_out = data_flight['durationOut']

@@ -9,8 +9,8 @@ class StopOver():
     date = None
     country = None
 
-    def __init__(self, geo_id, city, date, country):
-        self.geo_id = geo_id
+    def __init__(self, airport, city, date, country):
+        self.airport = airport
         self.city = city
         self.date = date
         self.country = country

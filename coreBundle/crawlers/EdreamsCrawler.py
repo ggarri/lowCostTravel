@@ -1,7 +1,6 @@
 __author__ = 'ggarrido'
 
 from coreBundle.crawlers.CrawlerABC import CrawlerABC
-from html import *
 import re
 
 

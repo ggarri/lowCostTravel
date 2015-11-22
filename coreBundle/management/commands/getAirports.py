@@ -1,7 +1,7 @@
 from django.core.management.base import BaseCommand, CommandError
 
 import sys
-from coreBundle.bussiness.CrawlBusiness import CrawlBussiness
+from coreBundle.bussiness.CrawlBusiness import CrawlBusiness
 from coreBundle.crawlers.EdreamsCrawler import EdreamsCrawler
 
 
@@ -19,5 +19,5 @@ class Command(BaseCommand):
             code = args[0]
 
         crawler = EdreamsCrawler()
-        bussiness = CrawlBussiness(crawler)
+        bussiness = CrawlBusiness(crawler)
         bussiness.store_aiport_in_country(code)

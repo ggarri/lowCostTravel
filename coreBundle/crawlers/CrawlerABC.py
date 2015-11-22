@@ -1,6 +1,6 @@
 __author__ = 'ggarrido'
 
-from abc import ABCMeta
+from abc import ABCMeta, abstractmethod
 import urllib
 import urllib2
 from bs4 import BeautifulSoup
@@ -31,23 +31,23 @@ class CrawlerABC():
         self.proxy_ip = ip
         self.proxy_port = port
 
-    @ABCMeta.abstractmethod
+    @abstractmethod
     def get_flights(self, trip_type, dep_stop, arr_stop):
         pass
 
-    @ABCMeta.abstractmethod
+    @abstractmethod
     def get_aiports(self, country_code):
         pass
 
-    @ABCMeta.abstractmethod
+    @abstractmethod
     def get_countries(self, letter):
         pass
 
-    @ABCMeta.abstractmethod
+    @abstractmethod
     def _extract_fligh_data_oneway(self, html):
         pass
 
-    @ABCMeta.abstractmethod
+    @abstractmethod
     def _extract_fligh_data_roundtrip(self, html):
         pass
 
@@ -55,7 +55,6 @@ class CrawlerABC():
         data = urllib.urlencode(params)
         req = urllib2.Request(url)
         for headType, headValue in self.headers.items():
-            print headType, headValue
             req.add_header(headType, headValue)
 
         response = urllib2.urlopen(req, data)
